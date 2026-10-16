@@ -22,7 +22,7 @@ ALL_OPS = STORY_OPS | {"new_story"}
 REQUIRED_SESSION = [
     "id", "dateLabel", "weekday", "meetingTitle", "meetingUrl", "program", "sessionName",
     "team", "project", "linearWorkspace", "futureMilestone", "newStoryMilestone",
-    "slackChannelId", "slackChannelName", "approvers", "ownerName",
+    "slackChannelId", "slackChannelName", "owners", "ownerName",
 ]
 SLOP = [
     (re.compile("[—–]"), "em or en dash"),
@@ -63,9 +63,11 @@ def validate(data):
             errs.append(f"session.{k} needs an id and a name")
     if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(ses.get("id", ""))):
         errs.append("session.id must be the meeting date as YYYY-MM-DD")
-    for a in ses.get("approvers") or []:
-        if not (a.get("name") and re.fullmatch(r"U[A-Z0-9]+", str(a.get("slackId", "")))):
-            errs.append(f"approver needs a name and a Slack user ID: {a}")
+    owner_ids = set()
+    for o in ses.get("owners") or []:
+        if not (o.get("id") and o.get("name") and o.get("owns") and re.fullmatch(r"U[A-Z0-9]+", str(o.get("slackId", "")))):
+            errs.append(f"owner needs id, name, owns and a Slack user ID: {o}")
+        owner_ids.add(o.get("id"))
 
     fb_ids = [f.get("n") for f in data["feedback"]]
     if len(set(fb_ids)) != len(fb_ids):
@@ -74,6 +76,11 @@ def validate(data):
         for k in ("n", "label", "summary", "t", "who"):
             if not f.get(k):
                 errs.append(f"feedback {f.get('n')} needs {k}")
+        for oid in f.get("owners", []):
+            if oid not in owner_ids:
+                errs.append(f"feedback {f.get('n')}: unknown owner id {oid}")
+        if not f.get("owners") and not f.get("covered"):
+            warns.append(f"feedback {f.get('n')} has no owner; the owner picks one on the page before it can be a new requirement")
     dec_ids = {d.get("id") for d in data.get("decisions", [])}
 
     for us, s in data["stories"].items():

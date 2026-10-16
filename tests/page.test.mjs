@@ -45,6 +45,13 @@ await page.check('[data-fb="F1"][data-cls="new"]');
 await page.check('[data-fb="F2"][data-cls="disc"]');
 await page.check('[data-fb="F3"][data-cls="fut"]');
 
+// A new requirement with no owner can't be sent.
+await page.uncheck('[data-fb="F1"][data-owner="alex"]');
+await page.click("#reviewbtn");
+assert.equal(await page.$eval("#applybtn", b => b.disabled), true, "new requirement without an owner blocks sending");
+await page.click("#cancelbtn");
+await page.check('[data-fb="F1"][data-owner="alex"]');
+
 await page.click("#reviewbtn");
 await page.waitForTimeout(100);
 assert.equal(await page.$eval("#applybtn", b => b.disabled), false);
@@ -59,6 +66,10 @@ assert.match(thread, /\*\*Still needs discussion\*\*/);
 assert.match(thread, /\*\*Already covered by what we're building\*\*/);
 assert.match(ask, /Filter by several statuses/);
 assert.doesNotMatch(ask, /Risk heat map|Team view|Upload from the step/, "approval request lists only new requirements");
+assert.match(ask, /<@U00000AAA01>: 1/, "the owner of item 1 is tagged");
+assert.doesNotMatch(ask, /<@U00000BBB02>/, "devs with nothing to approve are not tagged");
+assert.match(ask, /Nothing for Jordan this week/);
+assert.match(thread, /· _Alex_/, "summary lines carry owner names");
 
 const futureTickets = calls.filter(c => c.tool === "save_issue" && !c.input.id && c.input.milestone === "00000000-0000-0000-0000-00000000f001");
 assert.equal(futureTickets.length, 1, "one future-enhancement ticket per piece of feedback");
@@ -67,7 +78,8 @@ assert.equal(calls.filter(c => c.server === "Slack").length, 3, "post plus two t
 // Apply after approval.
 await page.click("#cancelbtn");
 await page.click("#reviewbtn");
-await page.check("#approvedchk");
+assert.equal(await page.$eval("#applybtn", b => b.disabled), true, "apply waits for the owner's approval");
+await page.check('[data-okby="alex"]');
 await page.waitForTimeout(100);
 await page.click("#applybtn");
 await page.waitForTimeout(800);

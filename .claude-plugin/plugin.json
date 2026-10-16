@@ -1,6 +1,6 @@
 {
   "name": "feedback-review",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Turn a weekly user feedback session in Granola into a review page: classify each piece of feedback, get dev approval in Slack, and apply approved changes to your user stories in Linear.",
   "author": { "name": "Kevin Stevens", "url": "https://github.com/itskstevens" },
   "homepage": "https://github.com/itskstevens/feedback-review",

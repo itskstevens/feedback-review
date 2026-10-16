@@ -19,11 +19,12 @@ Confirm both skills are available before going on.
 Run `feedback-review-setup`. It:
 
 1. checks Granola, Linear, Slack, artifacts with connector access, and scheduled tasks,
-2. asks about six questions (folder, meeting name, Linear team and project, story prefix, Slack channel and approvers, milestone for new stories, weekly time),
-3. creates a Future Enhancements milestone in Linear if there isn't one,
-4. saves the settings to the user's Claude project as `feedback-review/config.yaml`,
-5. creates the weekly scheduled task,
-6. does a dry run on the latest matching session that only DMs the user.
+2. asks the basics (folder, meeting name, Linear team and project, story prefix, Slack channel, milestone for new stories, weekly time),
+3. **builds the owner map with the user**: who owns which part of the build, tested on real stories and feedback until the user confirms it. Don't skip or shortcut this; it decides who gets tagged every week,
+4. creates a Future Enhancements milestone in Linear if there isn't one,
+5. saves the settings to the user's Claude project as `feedback-review/config.yaml`,
+6. creates the weekly scheduled task,
+7. does a dry run on the latest matching session that only DMs the user.
 
 ## 3. Hand over
 
@@ -32,5 +33,6 @@ Tell the user, in three lines: what's set up, when the first run happens, and th
 ## Rules while setting up
 
 - Never put the user's settings, meeting content or IDs into the repo or a pull request.
+- Never guess the owner map. Every owner and what they own comes from the user, and the user confirms the final map.
 - Don't post to any Slack channel during setup. The dry run messages only the user.
 - If a connector or capability is missing, say which one and how to add it, then stop. Don't build workarounds.

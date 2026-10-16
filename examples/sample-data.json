@@ -25,20 +25,24 @@
   "slackChannelId": "C00000EXAMPLE",
   "slackChannelName": "onboarding-tracker",
   "ownerName": "Sam Rivera",
-  "approvers": [
-   {
-    "name": "Alex Chen",
-    "slackId": "U00000AAA01"
-   },
-   {
-    "name": "Jordan Patel",
-    "slackId": "U00000BBB02"
-   }
-  ],
   "headings": {
    "acceptance": "Acceptance criteria",
    "questions": "Open questions"
-  }
+  },
+  "owners": [
+   {
+    "id": "alex",
+    "name": "Alex Chen",
+    "slackId": "U00000AAA01",
+    "owns": "the tracker app: screens, plans, My Work, documents, notifications, and its hosting"
+   },
+   {
+    "id": "jordan",
+    "name": "Jordan Patel",
+    "slackId": "U00000BBB02",
+    "owns": "data and integrations: CRM sync, ingestion, reporting data, and their hosting"
+   }
+  ]
  },
  "statusNote": "The My Work page shipped to the test environment this week. Feedback that repeats last week's approved updates is left out.",
  "decisions": [
@@ -56,7 +60,11 @@
    "summary": "Step owners can filter their steps by more than one status at once, across all their clients.",
    "t": "Asked to see every not-started and in-progress step together, without blocked ones, so they know what they can work on today.",
    "who": "Tomas (Operations)",
-   "by": "Tomas"
+   "by": "Tomas",
+   "owners": [
+    "alex"
+   ],
+   "ownerWhy": "My Work page is part of the tracker app."
   },
   {
    "n": "F2",
@@ -64,7 +72,11 @@
    "summary": "Everyone on a team can see their teammates' steps, so they can cover absences.",
    "t": "The team uses a shared mailbox today so anyone can cover for someone who is away. Asked for a team view open to every member, not only the lead.",
    "who": "Dana (Team lead)",
-   "by": "Dana"
+   "by": "Dana",
+   "owners": [
+    "alex"
+   ],
+   "ownerWhy": "Team view is a screen in the tracker app."
   },
   {
    "n": "F3",
@@ -72,7 +84,12 @@
    "summary": "The project timeline highlights at-risk and coming-due work before a date slips.",
    "t": "Asked whether the timeline will show what is at risk or coming due, so attention goes there first.",
    "who": "Attendee",
-   "by": "Attendee"
+   "by": "Attendee",
+   "owners": [
+    "alex",
+    "jordan"
+   ],
+   "ownerWhy": "Timeline view is app work; at-risk flags need reporting data."
   },
   {
    "n": "F4",
@@ -81,7 +98,11 @@
    "t": "Liked that the upload went straight to the client folder. Asked that this stays the only way files get there.",
    "who": "Priya (Implementation PM)",
    "by": "Priya",
-   "covered": "the step upload shown in this week's demo"
+   "covered": "the step upload shown in this week's demo",
+   "owners": [
+    "alex"
+   ],
+   "ownerWhy": "Step uploads live in the tracker app."
   }
  ],
  "stories": {

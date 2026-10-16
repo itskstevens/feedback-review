@@ -105,6 +105,14 @@ tr:last-child td{border-bottom:0}
 .check input{width:18px;height:18px;accent-color:var(--accent)}
 .warn{font-size:.88rem;color:var(--cut)}
 .okmsg{font-size:.9rem;color:var(--ok)}
+.owners-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:10px 16px;border-bottom:1px solid var(--line)}
+.owners-row .lbl{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.ochip{display:inline-flex;align-items:center;gap:6px;font-size:.86rem;padding:3px 10px;border:1px solid var(--line);border-radius:999px;cursor:pointer;background:var(--surface)}
+.ochip.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:600}
+.ochip input{width:15px;height:15px;accent-color:var(--accent)}
+.owners-row .why{flex-basis:100%;font-size:.82rem;color:var(--muted)}
+.pill.unowned{border:1px solid var(--cut);color:var(--cut)}
+.appr .items{font-size:.86rem;color:var(--muted)}
 .approvers{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
 .appr{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
 .apprhead{display:flex;justify-content:space-between;gap:8px;align-items:center}
@@ -163,7 +171,7 @@ details.ctx summary{cursor:pointer;font-size:.84rem;color:var(--accent);padding:
 .newstory{border-left:3px solid var(--ok);padding-left:10px;font-size:.9rem;white-space:pre-wrap}
 </style>
 
-<script type="application/json" id="audit-data">{"session": {"id": "2026-01-15", "dateLabel": "15 Jan 2026", "weekday": "Thursday", "meetingTitle": "Northwind Onboarding: Weekly Focus Group", "meetingUrl": "https://notes.granola.ai/d/00000000-0000-0000-0000-000000000000", "demoTopic": "the My Work page and step documents", "program": "Northwind Onboarding", "shortName": "Northwind", "sessionName": "focus group", "team": "NW", "project": "Onboarding Tracker", "milestone": "MVP Build", "linearWorkspace": "northwind-example", "futureMilestone": {"id": "00000000-0000-0000-0000-00000000f001", "name": "Future Enhancements"}, "newStoryMilestone": {"id": "00000000-0000-0000-0000-00000000a002", "name": "Iteration 2"}, "backlogState": "Backlog", "slackChannelId": "C00000EXAMPLE", "slackChannelName": "onboarding-tracker", "ownerName": "Sam Rivera", "approvers": [{"name": "Alex Chen", "slackId": "U00000AAA01"}, {"name": "Jordan Patel", "slackId": "U00000BBB02"}], "headings": {"acceptance": "Acceptance criteria", "questions": "Open questions"}}, "statusNote": "The My Work page shipped to the test environment this week. Feedback that repeats last week's approved updates is left out.", "decisions": [{"id": "D1", "title": "Heat map: now or later?", "body": "NW-104 keeps reporting to preset filters for the MVP. Dana asked for a heat map of at-risk work on the timeline.", "rec": "Proposed: future enhancement. The overdue filter covers the MVP."}], "feedback": [{"n": "F1", "label": "Filter by several statuses", "summary": "Step owners can filter their steps by more than one status at once, across all their clients.", "t": "Asked to see every not-started and in-progress step together, without blocked ones, so they know what they can work on today.", "who": "Tomas (Operations)", "by": "Tomas"}, {"n": "F2", "label": "Team view for every member", "summary": "Everyone on a team can see their teammates' steps, so they can cover absences.", "t": "The team uses a shared mailbox today so anyone can cover for someone who is away. Asked for a team view open to every member, not only the lead.", "who": "Dana (Team lead)", "by": "Dana"}, {"n": "F3", "label": "Risk heat map", "summary": "The project timeline highlights at-risk and coming-due work before a date slips.", "t": "Asked whether the timeline will show what is at risk or coming due, so attention goes there first.", "who": "Attendee", "by": "Attendee"}, {"n": "F4", "label": "Upload from the step", "summary": "Step owners attach a file on the step and it lands in the client's folder.", "t": "Liked that the upload went straight to the client folder. Asked that this stays the only way files get there.", "who": "Priya (Implementation PM)", "by": "Priya", "covered": "the step upload shown in this week's demo"}], "stories": {"US-03": {"ticket": "NW-101", "title": "See my work across clients", "st": "fly", "lin": "In Progress", "build": "My Work page built: by-status and by-client views.", "desc": "## Description\n\nAs a step owner, I can open one view of everything assigned to me.\n\n## Acceptance criteria\n\n* By default I only see the steps I am assigned to.\n* I can see which of my steps are overdue.\n\n## Open questions\n\n* Should this be the default home page?\n\n## User persona\n\nStep owner"}, "US-07": {"ticket": "NW-102", "title": "See my team's queue", "st": "up", "lin": "Backlog", "build": "Not started.", "desc": "## Description\n\nAs a team lead, I can see every client my team is on and assign my people against it.\n\n## Acceptance criteria\n\n* I can see every client my team is assigned to in one list.\n* I can assign a step to a named person on my team.\n\n## User persona\n\nTeam lead"}, "US-09": {"ticket": "NW-103", "title": "Attach a document to a step", "st": "fly", "lin": "In Progress", "build": "Upload to the client folder demoed.", "desc": "## Description\n\nAs a step owner, I can attach the document my step produced, and it lands in the client's folder.\n\n## Acceptance criteria\n\n* Dropping a file on the step uploads it to the client's folder.\n* Re-uploading a file with the same name creates a new version.\n\n## User persona\n\nStep owner"}}, "edits": [{"id": "e01", "us": "US-03", "op": "ac_add", "fb": ["F1"], "txt": "I can filter my steps by more than one status at once, across all my clients or for one client."}, {"id": "e02", "us": "US-03", "op": "oq_add", "fb": ["F1"], "txt": "Should the steps I can act on sort by due date or by how much downstream work they unblock? Alex to propose, Tomas to confirm."}, {"id": "e03", "us": "US-07", "op": "ac_add", "fb": ["F2"], "txt": "Every member of a team can open the team view and see each teammate's assigned steps, so they can cover absences."}, {"id": "e04", "us": "US-07", "op": "context", "fb": ["F2"], "txt": "The team uses a shared mailbox today so teammates can cover each other. Steps go to one person in the tool, so this view replaces the mailbox (Dana, 15 Jan)."}, {"id": "e05", "op": "new_story", "fb": ["F3"], "dec": ["D1"], "title": "See at-risk and coming-due work on the timeline", "txt": "## Description\n\nAs an implementation lead, I can see on the project timeline which steps are at risk and which are coming due, so I can act before a date slips.\n\n## Acceptance criteria\n\n* The timeline highlights overdue, at-risk and coming-due steps.\n* I can see the highlight for one client or across all my clients.\n\n## Open questions\n\n* What counts as at risk? Confirm with the PMs.\n\n## User persona\n\nImplementation lead"}, {"id": "e06", "us": "US-09", "op": "ac_add", "fb": ["F4"], "txt": "Uploading through the step is the only way files reach the client folder; direct edits in the folder are blocked."}], "gaps": ["This is example data for a fictional team. Names, tickets and IDs are made up."], "sources": [{"label": "Focus group, 15 Jan 2026", "url": "https://notes.granola.ai/d/00000000-0000-0000-0000-000000000000"}]}</script>
+<script type="application/json" id="audit-data">{"session": {"id": "2026-01-15", "dateLabel": "15 Jan 2026", "weekday": "Thursday", "meetingTitle": "Northwind Onboarding: Weekly Focus Group", "meetingUrl": "https://notes.granola.ai/d/00000000-0000-0000-0000-000000000000", "demoTopic": "the My Work page and step documents", "program": "Northwind Onboarding", "shortName": "Northwind", "sessionName": "focus group", "team": "NW", "project": "Onboarding Tracker", "milestone": "MVP Build", "linearWorkspace": "northwind-example", "futureMilestone": {"id": "00000000-0000-0000-0000-00000000f001", "name": "Future Enhancements"}, "newStoryMilestone": {"id": "00000000-0000-0000-0000-00000000a002", "name": "Iteration 2"}, "backlogState": "Backlog", "slackChannelId": "C00000EXAMPLE", "slackChannelName": "onboarding-tracker", "ownerName": "Sam Rivera", "headings": {"acceptance": "Acceptance criteria", "questions": "Open questions"}, "owners": [{"id": "alex", "name": "Alex Chen", "slackId": "U00000AAA01", "owns": "the tracker app: screens, plans, My Work, documents, notifications, and its hosting"}, {"id": "jordan", "name": "Jordan Patel", "slackId": "U00000BBB02", "owns": "data and integrations: CRM sync, ingestion, reporting data, and their hosting"}]}, "statusNote": "The My Work page shipped to the test environment this week. Feedback that repeats last week's approved updates is left out.", "decisions": [{"id": "D1", "title": "Heat map: now or later?", "body": "NW-104 keeps reporting to preset filters for the MVP. Dana asked for a heat map of at-risk work on the timeline.", "rec": "Proposed: future enhancement. The overdue filter covers the MVP."}], "feedback": [{"n": "F1", "label": "Filter by several statuses", "summary": "Step owners can filter their steps by more than one status at once, across all their clients.", "t": "Asked to see every not-started and in-progress step together, without blocked ones, so they know what they can work on today.", "who": "Tomas (Operations)", "by": "Tomas", "owners": ["alex"], "ownerWhy": "My Work page is part of the tracker app."}, {"n": "F2", "label": "Team view for every member", "summary": "Everyone on a team can see their teammates' steps, so they can cover absences.", "t": "The team uses a shared mailbox today so anyone can cover for someone who is away. Asked for a team view open to every member, not only the lead.", "who": "Dana (Team lead)", "by": "Dana", "owners": ["alex"], "ownerWhy": "Team view is a screen in the tracker app."}, {"n": "F3", "label": "Risk heat map", "summary": "The project timeline highlights at-risk and coming-due work before a date slips.", "t": "Asked whether the timeline will show what is at risk or coming due, so attention goes there first.", "who": "Attendee", "by": "Attendee", "owners": ["alex", "jordan"], "ownerWhy": "Timeline view is app work; at-risk flags need reporting data."}, {"n": "F4", "label": "Upload from the step", "summary": "Step owners attach a file on the step and it lands in the client's folder.", "t": "Liked that the upload went straight to the client folder. Asked that this stays the only way files get there.", "who": "Priya (Implementation PM)", "by": "Priya", "covered": "the step upload shown in this week's demo", "owners": ["alex"], "ownerWhy": "Step uploads live in the tracker app."}], "stories": {"US-03": {"ticket": "NW-101", "title": "See my work across clients", "st": "fly", "lin": "In Progress", "build": "My Work page built: by-status and by-client views.", "desc": "## Description\n\nAs a step owner, I can open one view of everything assigned to me.\n\n## Acceptance criteria\n\n* By default I only see the steps I am assigned to.\n* I can see which of my steps are overdue.\n\n## Open questions\n\n* Should this be the default home page?\n\n## User persona\n\nStep owner"}, "US-07": {"ticket": "NW-102", "title": "See my team's queue", "st": "up", "lin": "Backlog", "build": "Not started.", "desc": "## Description\n\nAs a team lead, I can see every client my team is on and assign my people against it.\n\n## Acceptance criteria\n\n* I can see every client my team is assigned to in one list.\n* I can assign a step to a named person on my team.\n\n## User persona\n\nTeam lead"}, "US-09": {"ticket": "NW-103", "title": "Attach a document to a step", "st": "fly", "lin": "In Progress", "build": "Upload to the client folder demoed.", "desc": "## Description\n\nAs a step owner, I can attach the document my step produced, and it lands in the client's folder.\n\n## Acceptance criteria\n\n* Dropping a file on the step uploads it to the client's folder.\n* Re-uploading a file with the same name creates a new version.\n\n## User persona\n\nStep owner"}}, "edits": [{"id": "e01", "us": "US-03", "op": "ac_add", "fb": ["F1"], "txt": "I can filter my steps by more than one status at once, across all my clients or for one client."}, {"id": "e02", "us": "US-03", "op": "oq_add", "fb": ["F1"], "txt": "Should the steps I can act on sort by due date or by how much downstream work they unblock? Alex to propose, Tomas to confirm."}, {"id": "e03", "us": "US-07", "op": "ac_add", "fb": ["F2"], "txt": "Every member of a team can open the team view and see each teammate's assigned steps, so they can cover absences."}, {"id": "e04", "us": "US-07", "op": "context", "fb": ["F2"], "txt": "The team uses a shared mailbox today so teammates can cover each other. Steps go to one person in the tool, so this view replaces the mailbox (Dana, 15 Jan)."}, {"id": "e05", "op": "new_story", "fb": ["F3"], "dec": ["D1"], "title": "See at-risk and coming-due work on the timeline", "txt": "## Description\n\nAs an implementation lead, I can see on the project timeline which steps are at risk and which are coming due, so I can act before a date slips.\n\n## Acceptance criteria\n\n* The timeline highlights overdue, at-risk and coming-due steps.\n* I can see the highlight for one client or across all my clients.\n\n## Open questions\n\n* What counts as at risk? Confirm with the PMs.\n\n## User persona\n\nImplementation lead"}, {"id": "e06", "us": "US-09", "op": "ac_add", "fb": ["F4"], "txt": "Uploading through the step is the only way files reach the client folder; direct edits in the folder are blocked."}], "gaps": ["This is example data for a fictional team. Names, tickets and IDs are made up."], "sources": [{"label": "Focus group, 15 Jan 2026", "url": "https://notes.granola.ai/d/00000000-0000-0000-0000-000000000000"}]}</script>
 
 <div class="wrap">
 <header>
@@ -265,7 +273,7 @@ details.ctx summary{cursor:pointer;font-size:.84rem;color:var(--accent);padding:
       <div class="fld" id="f-thread"><label class="sl" for="slackthread">Thread reply 1: summary</label><textarea id="slackthread"></textarea></div>
       <div class="fld" id="f-approval"><label class="sl" for="slackapproval">Thread reply 2: approval request</label><textarea id="slackapproval"></textarea><p class="src">The tags notify each dev. You can edit any of this before sending.</p></div>
       <div class="fld" id="f-final"><label class="sl" for="slackfinal">Thread reply once applied</label><textarea id="slackfinal"></textarea></div>
-      <label class="check" id="f-confirm"><input type="checkbox" id="approvedchk"> The devs have approved in the Slack thread</label>
+      <p class="note" id="f-confirm">Apply unlocks once you tick "approved" for every owner in the Dev approval section above.<input type="checkbox" id="approvedchk" hidden></p>
     </div>
     <p class="warn" id="panelwarn" hidden></p>
     <p class="okmsg" id="panelok" hidden></p>
@@ -298,8 +306,10 @@ const REF = n => `fbr/${SES.id}/${n}`;
 
 /* ---------- review state: kept in this page's store so it survives across days and devices ---------- */
 const KEY = "fbr-" + SES.id;
-const APPROVERS = SES.approvers || [];
-const BLANK = () => ({cls:{}, covNote:{}, logged:{}, applied:{}, created:{}, phase:"draft", sent:[], slack:null, approvedAt:null});
+const OWNERS = (SES.owners && SES.owners.length) ? SES.owners : (SES.approvers || []).map(a=>({id:a.slackId, name:a.name, slackId:a.slackId, owns:""}));
+const OWN = id => OWNERS.find(o=>o.id===id);
+const first = o => o.name.split(" ")[0];
+const BLANK = () => ({cls:{}, covNote:{}, own:{}, okBy:{}, logged:{}, applied:{}, created:{}, phase:"draft", sent:[], sentOwners:{}, slack:null, approvedAt:null});
 let S = BLANK();
 try { const raw = JSON.parse(localStorage.getItem(KEY) || "null"); if (raw && raw.cls) S = Object.assign(BLANK(), raw); } catch(e) {}
 if (!S.init) { FEEDBACK.forEach(f=>{ if (f.covered) { S.cls[f.n] = "cov"; S.covNote[f.n] = f.covered; } }); S.init = true; }
@@ -323,6 +333,12 @@ const cls = n => S.cls[n] || null;
 const sentSet = () => new Set(S.sent || []);
 const canClassify = f => S.phase!=="done" && !S.logged[f.n] && !editsFor(f.n).some(e=>S.applied[e.id]) && (S.phase==="draft" || sentSet().has(f.n) || cls(f.n)==="disc");
 const withCls = c => FEEDBACK.filter(f=>cls(f.n)===c);
+const ownersOf = f => (S.own && S.own[f.n]) ? S.own[f.n] : (f.owners || []);
+const ownerNames = f => ownersOf(f).map(id=>OWN(id)).filter(Boolean).map(first);
+const unowned = () => withCls("new").filter(f=>!ownersOf(f).length);
+/* owners who must approve: the owners of every new requirement sent for approval */
+const approversNeeded = () => { const m = new Map(); (S.sent||[]).forEach(n=>{ ((S.sentOwners||{})[n] || []).forEach(id=>{ if(!m.has(id)) m.set(id, []); m.get(id).push(n); }); }); return m; };
+const allApproved = () => { const m = approversNeeded(); return [...m.keys()].every(id=>S.okBy && S.okBy[id]); };
 const unclassified = () => FEEDBACK.filter(f=>!cls(f.n));
 const inScope = e => e.fb.some(n=>cls(n)==="new");
 const toApply = () => EDITS.filter(e=>inScope(e) && !S.applied[e.id]);
@@ -405,6 +421,11 @@ function editRow(e){
 }
 let OPEN_CTX = new Set();
 document.addEventListener("toggle", ev=>{ const d = ev.target; if (d.classList && d.classList.contains("ctx")) { const k = d.dataset.k; if (k) d.open ? OPEN_CTX.add(k) : OPEN_CTX.delete(k); } }, true);
+function ownersRow(f, ok){
+  const mine = ownersOf(f);
+  const chips = OWNERS.map(o=>`<label class="ochip${mine.includes(o.id)?" on":""}" title="${esc(o.owns||"")}"><input type="checkbox" data-owner="${esc(o.id)}" data-fb="${f.n}" ${mine.includes(o.id)?"checked":""} ${ok?"":"disabled"}> ${esc(o.name)}</label>`).join("");
+  return `<div class="owners-row"><span class="lbl">Impacts</span>${chips}${mine.length?"":'<span class="pill unowned">No owner yet</span>'}${f.ownerWhy?`<span class="why">${esc(f.ownerWhy)}</span>`:""}</div>`;
+}
 function renderGroups(){
   document.getElementById("groups").innerHTML = FEEDBACK.map(f=>{
     const es = editsFor(f.n), c = cls(f.n), ok = canClassify(f), lg = S.logged[f.n];
@@ -413,6 +434,7 @@ function renderGroups(){
     const tag = c ? `<span class="pill ${c}">${CLS[c]}</span>` : '<span class="pill none">Not classified</span>';
     return `<div class="group${c?" k-"+c:""}">
       <div class="ghead"><div class="gt"><span class="fid">${esc(f.n)} ${tag}${lg?` <a class="mono" href="${esc(lg.url||LIN(lg.id))}" target="_blank" rel="noopener">${esc(lg.id)}</a>`:""}</span><h3>${esc(f.label)}</h3><span class="sum">${esc(f.summary)}</span><span class="quote">${esc(f.t)}</span><span class="who">${esc(f.who)} · ${plural(es.length,"story update","story updates")}</span></div></div>
+      ${ownersRow(f, ok)}
       <div class="card-choice">${box("new","New requirement")}${box("fut","Future enhancement")}${box("disc","Still needs discussion")}${box("cov","Already covered in app")}${c==="cov"?`<input type="text" class="covnote" data-covnote="${f.n}" value="${esc(S.covNote[f.n]||"")}" placeholder="Covered by, for example: My Works page" maxlength="200" aria-label="What covers ${esc(f.label)}">`:""}</div>
       <div class="chg-head">What changes in Linear if it's a new requirement</div>
       <div class="rows">${es.map(e=>editRow(e).replace('<details class="ctx"', `<details class="ctx" data-k="${f.n}-${e.id}"${OPEN_CTX.has(f.n+"-"+e.id)?" open":""}`)).join("")}</div></div>`;
@@ -452,6 +474,7 @@ function rerender(){ renderStats(); renderGroups(); renderStories(); renderFutur
 document.getElementById("groups").addEventListener("change", ev=>{
   const t = ev.target;
   if (t.dataset.cls) { const f = FEEDBACK.find(x=>x.n===t.dataset.fb); if (!f || !canClassify(f)) return; setCls(f.n, t.checked ? t.dataset.cls : null); save(); rerender(); }
+  else if (t.dataset.owner) { const f = FEEDBACK.find(x=>x.n===t.dataset.fb); if (!f || !canClassify(f)) return; const cur = new Set(ownersOf(f)); t.checked ? cur.add(t.dataset.owner) : cur.delete(t.dataset.owner); S.own[f.n] = OWNERS.map(o=>o.id).filter(id=>cur.has(id)); if (S.phase==="awaiting" && sentSet().has(f.n)) S.sentOwners[f.n] = S.own[f.n]; save(); rerender(); }
   else if (t.dataset.covnote) { S.covNote[t.dataset.covnote] = t.value.trim(); save(); renderCovered(); if(!document.getElementById("panel").hidden && !running && !RESULTS) buildPlan(); }
 });
 
@@ -566,13 +589,21 @@ function draftTexts(){
   if (cv.length) counts.push(`${cv.length} already covered by what we're building`);
   const main = `**${SHORT}, ${SES.dateLabel}:** we've gone through the feedback. ${listJoin(counts)}. Only the new requirements need your approval; the user stories in Linear change once you approve. Details in the thread.`;
   const sum = [];
-  sum.push(`**New requirements** (need approval)\n${nw.length ? nw.map(f=>`• **${f.label}** (${by(f)}): ${f.summary} ${shortStories(f)}`).join("\n") : "None this week."}`);
-  if (fu.length) sum.push(`**Future enhancements** (logged in the ${FUT_MS.name} milestone, no action needed)\n${fu.map(f=>`• **${f.label}** (${by(f)}): ${f.summary}${futLink(f)}`).join("\n")}`);
-  if (ds.length) sum.push(`**Still needs discussion** (we're still working through the requirements, no action yet)\n${ds.map(f=>`• **${f.label}** (${by(f)}): ${f.summary}`).join("\n")}`);
-  if (cv.length) sum.push(`**Already covered by what we're building** (no change)\n${cv.map(f=>`• **${f.label}** (${by(f)})${S.covNote[f.n]?`: covered by ${S.covNote[f.n]}`:""}`).join("\n")}`);
+  const tagOf = f => { const n = ownerNames(f); return n.length ? ` · _${n.join(", ")}_` : ""; };
+  sum.push(`**New requirements** (need approval)\n${nw.length ? nw.map(f=>`• **${f.label}** (${by(f)}): ${f.summary} ${shortStories(f)}${tagOf(f)}`).join("\n") : "None this week."}`);
+  if (fu.length) sum.push(`**Future enhancements** (logged in the ${FUT_MS.name} milestone, no action needed)\n${fu.map(f=>`• **${f.label}** (${by(f)}): ${f.summary}${futLink(f)}${tagOf(f)}`).join("\n")}`);
+  if (ds.length) sum.push(`**Still needs discussion** (we're still working through the requirements, no action yet)\n${ds.map(f=>`• **${f.label}** (${by(f)}): ${f.summary}${tagOf(f)}`).join("\n")}`);
+  if (cv.length) sum.push(`**Already covered by what we're building** (no change)\n${cv.map(f=>`• **${f.label}** (${by(f)})${S.covNote[f.n]?`: covered by ${S.covNote[f.n]}`:""}${tagOf(f)}`).join("\n")}`);
   sum.push(`[Meeting note in Granola](${MEET})`);
-  const ask = [`${APPROVERS.map(mention).join(" ")} please review the new requirements below before they go into the user stories. Reply in this thread to approve, or name any you want moved to future enhancements. The future enhancements, items still in discussion and already-covered items need no action.`];
-  ask.push(nw.map((f,i)=>`${i+1}. **${f.label}**: ${f.summary}\n   Stories: ${storiesOf(f).join("; ")}`).join("\n") || "No new requirements this week.");
+  const ask = [];
+  if (nw.length){
+    const idx = new Map(nw.map((f,i)=>[f.n, i+1]));
+    const who = OWNERS.map(o=>({o, items:nw.filter(f=>ownersOf(f).includes(o.id))})).filter(x=>x.items.length);
+    const none = OWNERS.filter(o=>!who.some(x=>x.o.id===o.id));
+    ask.push(`**Who needs to look at what**\n${who.map(x=>`${mention(x.o)}: ${x.items.map(f=>idx.get(f.n)).join(", ")}${x.o.owns?` (${x.o.owns})`:""}`).join("\n")}${none.length?`\nNothing for ${listJoin(none.map(first))} this week.`:""}`);
+    ask.push(`Reply in this thread to approve your items, or name any you want moved to future enhancements. Everything else in the summary needs no action.`);
+    ask.push(nw.map(f=>`${idx.get(f.n)}. **${f.label}** · ${ownerNames(f).join(", ")||"no owner"}\n   ${f.summary}\n   Stories: ${storiesOf(f).join("; ")}`).join("\n"));
+  } else ask.push("No new requirements this week, so nothing needs approval.");
   return {main, thread: sum.join("\n\n"), approval: ask.join("\n\n")};
 }
 function finalText(){
@@ -625,11 +656,13 @@ function renderApproval(){
   document.getElementById("apptitle").textContent = S.phase==="done" ? "Approved and applied" : "Waiting on dev approval";
   document.getElementById("appnote").textContent = S.phase==="done" ? `Applied to Linear on ${fmtDate(S.approvedAt)}.` : `Sent for approval on ${fmtDate(sl.at)}. ${plural((S.sent||[]).length,"new requirement is","new requirements are")} waiting. If a dev holds one back, switch its card to Future enhancement, Still needs discussion or Already covered in app before you apply.`;
   const tl = document.getElementById("threadlink"); tl.hidden = !sl.link; if (sl.link) tl.href = sl.link;
-  document.getElementById("approvers").innerHTML = APPROVERS.map(a=>{
-    const reps = REPLIES ? (REPLIES[a.slackId] || []) : null;
+  const need = approversNeeded();
+  document.getElementById("approvers").innerHTML = need.size ? [...need.entries()].map(([id, ns])=>{
+    const a = OWN(id) || {name:id, slackId:id}, reps = REPLIES ? (REPLIES[a.slackId] || []) : null;
     const st = reps === null ? '<span class="pill lin">Not checked</span>' : reps.length ? '<span class="pill done">Replied</span>' : '<span class="pill fly">No reply yet</span>';
-    return `<div class="appr"><div class="apprhead"><b>${esc(a.name)}</b>${st}</div>${(reps||[]).map(r=>`<p class="rep">${esc(r.text)}<span class="src"> ${esc(r.at)}</span></p>`).join("")}</div>`;
-  }).join("");
+    const items = ns.map(n=>FEEDBACK.find(f=>f.n===n)).filter(Boolean).map(f=>f.label).join(", ");
+    return `<div class="appr"><div class="apprhead"><b>${esc(a.name)}</b>${st}</div><span class="items">Their items: ${esc(items)}</span>${(reps||[]).map(r=>`<p class="rep">${esc(r.text)}<span class="src"> ${esc(r.at)}</span></p>`).join("")}${S.phase==="awaiting"?`<label class="check"><input type="checkbox" data-okby="${esc(id)}" ${S.okBy[id]?"checked":""}> ${esc(first(a))} approved</label>`:""}</div>`;
+  }).join("") : '<p class="note empty">No new requirements were sent, so nobody needs to approve. Apply logs anything you moved to future enhancements and posts the wrap-up.</p>';
   document.getElementById("checkbtn").hidden = S.phase!=="awaiting" || !sl.ts;
 }
 async function checkThread(){
@@ -654,6 +687,7 @@ async function checkThread(){
   renderApproval();
 }
 document.getElementById("checkbtn").addEventListener("click", checkThread);
+document.getElementById("approvers").addEventListener("change", ev=>{ const id = ev.target.dataset.okby; if (!id) return; S.okBy[id] = ev.target.checked; save(); renderApproval(); if(!document.getElementById("panel").hidden && !running && !RESULTS) buildPlan(); });
 
 /* ---------- panel ---------- */
 function byTicket(){ const m = new Map(); toApply().forEach(e=>{ const k = storyKey(e); if(!m.has(k)) m.set(k, []); m.get(k).push(e); }); return m; }
@@ -662,14 +696,16 @@ function buildPlan(){
   const un = unclassified(), lg = toLog(), rows = [];
   if (S.phase==="draft"){
     document.getElementById("panelh").textContent = "Send for dev approval";
-    document.getElementById("panelnote").textContent = un.length ? `Classify ${un.length===1?"this piece":`these ${un.length} pieces`} of feedback first: ${un.map(f=>f.label).join(", ")}.` : `${plural(withCls("new").length,"new requirement goes","new requirements go")} to the devs for approval. Nothing changes in the user stories yet.${lg.length?` ${plural(lg.length,"future enhancement gets","future enhancements get")} logged in the ${FUT_MS.name} milestone now.`:""}${withCls("disc").length?` ${withCls("disc").length} still in discussion and`:""}${withCls("cov").length||withCls("disc").length?` ${withCls("cov").length} already covered: nothing in Linear, listed in the summary.`:""}`;
+    const uo = unowned();
+    document.getElementById("panelnote").textContent = un.length ? `Classify ${un.length===1?"this piece":`these ${un.length} pieces`} of feedback first: ${un.map(f=>f.label).join(", ")}.` : uo.length ? `Pick who each new requirement impacts first: ${uo.map(f=>f.label).join(", ")}. Owners are the devs tagged to approve it.` : `${plural(withCls("new").length,"new requirement goes","new requirements go")} to the devs for approval. Nothing changes in the user stories yet.${lg.length?` ${plural(lg.length,"future enhancement gets","future enhancements get")} logged in the ${FUT_MS.name} milestone now.`:""}${withCls("disc").length?` ${withCls("disc").length} still in discussion and`:""}${withCls("cov").length||withCls("disc").length?` ${withCls("cov").length} already covered: nothing in Linear, listed in the summary.`:""}`;
     if (lg.length) rows.push(["LOG","Linear",`Log ${plural(lg.length,"future enhancement","future enhancements")} in ${FUT_MS.name}`]);
     rows.push(["MAIN","Slack",`Post to #${SES.slackChannelName||"project channel"}`]);
     rows.push(["THREAD","Thread","Summary: new requirements, future enhancements, already covered"]);
-    rows.push(["ASK","Thread",`Approval request tagging ${APPROVERS.map(x=>x.name.split(" ")[0]).join(", ")}`]);
+    const tagged = OWNERS.filter(o=>withCls("new").some(f=>ownersOf(f).includes(o.id)));
+    rows.push(["ASK","Thread", tagged.length ? `Approval request tagging only ${listJoin(tagged.map(first))}` : "Note that nothing needs approval (nobody tagged)"]);
     showFields(["f-main","f-thread","f-approval"]);
     document.getElementById("applybtn").textContent = "Send for approval";
-    document.getElementById("applybtn").disabled = running || !!un.length;
+    document.getElementById("applybtn").disabled = running || !!un.length || !!uo.length;
   } else if (S.phase==="awaiting"){
     const m = byTicket();
     document.getElementById("panelh").textContent = "Apply approved updates to Linear";
@@ -679,7 +715,7 @@ function buildPlan(){
     rows.push(["FINAL","Thread","Reply: approved and applied"]);
     showFields(["f-final","f-confirm"]);
     document.getElementById("applybtn").textContent = "Apply to Linear";
-    document.getElementById("applybtn").disabled = running || !!un.length || !document.getElementById("approvedchk").checked;
+    document.getElementById("applybtn").disabled = running || !!un.length || !allApproved();
   }
   document.getElementById("plan").innerHTML = rows.map(([k,label,msg])=>`<div class="pr"><span class="mono">${esc(label)}</span><span class="msg">${esc(msg)}</span><span class="pill lin" data-status="${esc(k)}">Ready</span></div>`).join("");
   fillTexts(false);
@@ -694,6 +730,7 @@ const panelMsg = (warn, ok) => { const w = document.getElementById("panelwarn"),
 async function sendForApproval(){
   panelMsg();
   if (unclassified().length) { panelMsg("Classify every piece of feedback first."); return; }
+  if (unowned().length) { panelMsg("Pick who each new requirement impacts first."); return; }
   if (!(await getMcp())) { panelMsg("Linear and Slack can't be reached from this view. Open the page in Claude while signed in."); return; }
   running = true; RESULTS = true; ["applybtn","cancelbtn"].forEach(id=>document.getElementById(id).disabled = true);
   const lg = toLog();
@@ -708,7 +745,7 @@ async function sendForApproval(){
     setRow("MAIN","Posting","fly");
     const top = await slack("slack_send_message", {channel_id:CHANNEL, message:document.getElementById("slackmain").value.trim()});
     const ts = tsFrom(top) || await recoverTs(`${SHORT}, ${SES.dateLabel}`), link = linkFrom(top);
-    S.phase = "awaiting"; S.sent = withCls("new").map(f=>f.n); S.slack = {ts, link, at:new Date().toISOString()}; save();
+    S.phase = "awaiting"; S.sent = withCls("new").map(f=>f.n); S.sentOwners = Object.fromEntries(withCls("new").map(f=>[f.n, ownersOf(f)])); S.slack = {ts, link, at:new Date().toISOString()}; save();
     setRow("MAIN","Done","done");
     if (!ts) { ["THREAD","ASK"].forEach(k=>setRow(k,"Not posted","cut","The channel post went out but its thread couldn't be found. Copy this text into the thread by hand.")); panelMsg("Post the summary and approval request in the thread by hand, using the text above."); }
     else {
@@ -733,6 +770,7 @@ async function sendForApproval(){
 async function applyApproved(){
   panelMsg();
   if (unclassified().length) { panelMsg("Classify every piece of feedback first."); return; }
+  if (!allApproved()) { panelMsg("Tick each owner's approval first."); return; }
   if (!(await getMcp())) { panelMsg("Linear and Slack can't be reached from this view. Open the page in Claude while signed in."); return; }
   running = true; RESULTS = true; ["applybtn","cancelbtn"].forEach(id=>document.getElementById(id).disabled = true);
   const userFinal = edited.slackfinal ? document.getElementById("slackfinal").value.trim() : null;
@@ -740,7 +778,7 @@ async function applyApproved(){
   for (const [k, es] of byTicket()){
     if (stopped) { setRow(k,"Not run","lin"); continue; }
     const fbs = [...new Set(es.flatMap(e=>e.fb))].filter(n=>cls(n)==="new").map(n=>FEEDBACK.find(x=>x.n===n).label);
-    const note = `**Updated from the ${SHORT}, ${SES.dateLabel}** (approved by ${APPROVERS.map(a=>a.name.split(" ")[0]).join(", ")} in Slack; applied by ${SES.ownerName || "the review owner"})\nFeedback: ${fbs.join(", ")}`;
+    const note = `**Updated from the ${SHORT}, ${SES.dateLabel}** (approved by ${listJoin([...new Set(es.flatMap(e=>e.fb).filter(n=>cls(n)==="new").flatMap(n=>(S.sentOwners||{})[n]||ownersOf(FEEDBACK.find(x=>x.n===n))))].map(id=>OWN(id)).filter(Boolean).map(first)) || "the team"} in Slack; applied by ${SES.ownerName || "the review owner"})\nFeedback: ${fbs.join(", ")}`;
     try {
       if (es[0].op==="new_story"){
         const e = es[0];

@@ -10,6 +10,9 @@ The MVP (v0.1) supports Granola, Linear and Slack. Everything below is a candida
 - **Upgrade path.** Settings carry a version; the setup skill migrates older settings when the plugin updates.
 - **Weekly digest for stakeholders.** Optional short summary of decisions for leads or change managers, sent as a DM or channel post after the owner applies.
 
+- **Owner suggestions from Linear.** Use story labels, components or assignees as extra signals when proposing owners, for teams whose Linear data matches real ownership.
+- **Per-owner approval from Slack replies.** Read each owner's reply and tick their approval automatically when it's a clear yes.
+
 ## Project tools (adapters)
 
 Each needs the six operations in [docs/adapter-spec.md](docs/adapter-spec.md).

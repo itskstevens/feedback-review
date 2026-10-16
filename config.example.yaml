@@ -1,8 +1,8 @@
-# feedback-review settings. The setup skill writes this for you; you rarely edit it by hand.
+# feedback-review settings. The setup skill writes this with you; you rarely edit it by hand.
 # Keep your filled-in copy in your Claude project (or a private folder), never in this repo.
 
 owner:
-  name: Sam Rivera                 # used in Linear comments: "applied by <name>"
+  name: Sam Rivera                 # you: used in Linear comments, "applied by <name>"
   slack_user_id: U00000OWNER       # where the "your review page is ready" DM goes
 
 program:
@@ -44,11 +44,32 @@ chat:
   type: slack                      # MVP supports slack only
   channel_id: C00000EXAMPLE
   channel_name: onboarding-tracker
-  approvers:                       # devs tagged on the approval request
-    - name: Alex Chen
-      slack_id: U00000AAA01
-    - name: Jordan Patel
-      slack_id: U00000BBB02
+
+# Who gets tagged when feedback affects their part of the build.
+# Setup builds this with you and tests it on real examples. Only owners are tagged,
+# and each new requirement waits only on its owners' approval.
+owners_confirmed: false            # setup sets this after you confirm the map
+owners:
+  - id: alex
+    name: Alex Chen
+    slack_id: U00000AAA01
+    owns: The tracker app, everything users see and click, plus its hosting
+    signals: [screens, My Work, plan builder, notifications, uploads, milestone "MVP Build"]
+    not: [CRM sync]
+  - id: jordan
+    name: Jordan Patel
+    slack_id: U00000BBB02
+    owns: Data and integrations (CRM sync, ingestion, reporting data), plus their hosting
+    signals: [CRM, HubSpot, import, pipeline, reporting data]
+
+# Real examples tested during setup, with the right owners. The weekly run learns from these.
+examples:
+  - text: "Filter My Work by several statuses"
+    owners: [alex]
+  - text: "Deal data from the CRM arrives a day late"
+    owners: [jordan]
+  - text: "Timeline highlights at-risk work"
+    owners: [alex, jordan]
 
 schedule:
   weekday: Thursday

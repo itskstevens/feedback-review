@@ -95,7 +95,7 @@
    "col": 3,
    "type": "frontend",
    "label": "Send for approval",
-   "sublabel": "logs futures, posts thread",
+   "sublabel": "tags each item's owner",
    "width": 160
   },
   {
@@ -112,8 +112,8 @@
    "lane": "you",
    "col": 4,
    "type": "messagebus",
-   "label": "Devs approve",
-   "sublabel": "sign off new requirements",
+   "label": "Owners approve",
+   "sublabel": "only devs it affects",
    "width": 160
   },
   {
@@ -179,7 +179,7 @@
    "id": "send-thread",
    "from": "send",
    "to": "thread",
-   "label": "post",
+   "label": "tag owners",
    "variant": "emphasis"
   },
   {

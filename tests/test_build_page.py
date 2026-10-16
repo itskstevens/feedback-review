@@ -41,6 +41,18 @@ class ValidateTests(unittest.TestCase):
         errs, _ = build_page.validate(d)
         self.assertTrue(any("futureMilestone" in e for e in errs))
 
+    def test_unknown_owner(self):
+        d = copy.deepcopy(SAMPLE)
+        d["feedback"][0]["owners"] = ["nobody"]
+        errs, _ = build_page.validate(d)
+        self.assertTrue(any("unknown owner" in e for e in errs))
+
+    def test_owner_needs_owns(self):
+        d = copy.deepcopy(SAMPLE)
+        d["session"]["owners"][0]["owns"] = ""
+        errs, _ = build_page.validate(d)
+        self.assertTrue(any("owner needs" in e for e in errs))
+
     def test_dash_is_a_warning(self):
         d = copy.deepcopy(SAMPLE)
         d["feedback"][0]["summary"] = "Filters — lots of them."

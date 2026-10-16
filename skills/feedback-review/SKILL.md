@@ -11,7 +11,7 @@ You read one feedback session, map each piece of feedback to the user stories it
 
 ## 0. Load settings
 
-Read the settings file `feedback-review/config.yaml` from the attached Claude project (or the path the user gives). If it doesn't exist, stop and run the `feedback-review-setup` skill. Every value below in `{braces}` comes from it.
+Read the settings file `feedback-review/config.yaml` from the attached Claude project (or the path the user gives). If it doesn't exist, or `owners_confirmed` isn't `true`, stop and run the `feedback-review-setup` skill (in a scheduled run, DM the owner that setup needs finishing instead). Every value below in `{braces}` comes from it.
 
 Read `references/writing-rules.md` before writing any text that lands on the page or in Slack. Read `references/data-format.md` before building the data file.
 
@@ -56,6 +56,12 @@ Every update names the feedback it comes from in `fb`. When feedback conflicts w
 For each piece of feedback also write `label` (2 to 5 words), `summary` (one sentence on what changes for users; it goes straight into Slack), `t` (what was said, paraphrased), `who` (name and team) and `by` (first name). If the session clearly shows the app already does it, set `covered` to what covers it; the page pre-ticks Already covered. Leave everything else unclassified: classifying is the owner's call.
 
 Don't propose ticket status changes.
+
+## 5b. Tag who it impacts
+
+For each piece of feedback, set `owners` to the ids from `{owners}` whose part of the build it touches, and `ownerWhy` to one short sentence saying why ("My Works is part of the Power Apps app."). Match on each owner's `owns`, `signals` and `not`, the stories the feedback changes, and the solved `{examples}` from setup. Tag more than one owner only when the work really spans both parts.
+
+If the map doesn't clearly cover it, leave `owners` empty and say so in `ownerWhy`. The page then shows "No owner yet" and won't send it as a new requirement until the user picks one. Never tag someone because they're in the channel or assigned the story by default. Feedback that isn't dev work at all (a process or training question) gets no owner and a `ownerWhy` saying so.
 
 ## 6. Build and check the page
 

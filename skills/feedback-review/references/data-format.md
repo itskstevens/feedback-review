@@ -18,14 +18,15 @@
     "backlogState": "{tracker.backlog_state}",
     "headings": {"acceptance": "{stories.acceptance_heading}", "questions": "{stories.questions_heading}"},
     "slackChannelId": "{chat.channel_id}", "slackChannelName": "{chat.channel_name}",
-    "approvers": [{"name": "…", "slackId": "U…"}]
+    "owners": [{"id": "alex", "name": "Alex Chen", "slackId": "U…", "owns": "{owners[].owns}"}]
   },
   "statusNote": "One short paragraph of context for the owner, or \"\".",
   "decisions": [{"id": "D1", "title": "Question form", "body": "The conflict: who said what, when.", "rec": "Proposed: …"}],
   "feedback": [{
     "n": "F1", "label": "2 to 5 words", "summary": "What changes for users. Goes into Slack.",
     "t": "What was said, paraphrased.", "who": "Name (team)", "by": "First name",
-    "covered": "optional: what already covers it"
+    "covered": "optional: what already covers it",
+    "owners": ["alex"], "ownerWhy": "One sentence: why this owner."
   }],
   "stories": {
     "US-03": {"ticket": "NW-101", "title": "Short title", "st": "fly|up|cut", "lin": "Linear status",
@@ -51,5 +52,7 @@
 | Future enhancement | At send: one `[Future] <label>` ticket in the future milestone, linked to the stories, with `Ref: fbr/<date>/<F#>` | "Future enhancements (logged…, no action needed)" with the ticket link |
 | Still needs discussion | Nothing | "Still needs discussion (no action yet)" |
 | Already covered in app | Nothing | "Already covered by what we're building (no change)" with the owner's note |
+
+Owners: only the owners of new requirements are tagged in the approval request, under a "Who needs to look at what" list; owners with nothing are named in one "Nothing for … this week" line. Every summary line carries its owners' names (no tag). A new requirement can't be sent without an owner, and each one waits only on its owners' approval, which the user ticks per owner on the page.
 
 An update shared by two feedback items goes in if either is a new requirement. The page won't send until every feedback item is classified. Progress lives in the artifact's own store, so the owner can send one day and apply another.

@@ -6,7 +6,7 @@
       "name": "feedback-review",
       "source": "./",
       "description": "Weekly feedback session to approved user-story updates: Granola in, Slack approval, Linear out.",
-      "version": "0.1.0"
+      "version": "0.2.0"
     }
   ]
 }
