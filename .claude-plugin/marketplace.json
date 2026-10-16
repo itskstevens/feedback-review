@@ -1,0 +1,12 @@
+{
+  "name": "itskstevens",
+  "owner": { "name": "Kevin Stevens", "url": "https://github.com/itskstevens" },
+  "plugins": [
+    {
+      "name": "feedback-review",
+      "source": "./",
+      "description": "Weekly feedback session to approved user-story updates: Granola in, Slack approval, Linear out.",
+      "version": "0.1.0"
+    }
+  ]
+}

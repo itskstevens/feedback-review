@@ -1,0 +1,181 @@
+{
+ "session": {
+  "id": "2026-01-15",
+  "dateLabel": "15 Jan 2026",
+  "weekday": "Thursday",
+  "meetingTitle": "Northwind Onboarding: Weekly Focus Group",
+  "meetingUrl": "https://notes.granola.ai/d/00000000-0000-0000-0000-000000000000",
+  "demoTopic": "the My Work page and step documents",
+  "program": "Northwind Onboarding",
+  "shortName": "Northwind",
+  "sessionName": "focus group",
+  "team": "NW",
+  "project": "Onboarding Tracker",
+  "milestone": "MVP Build",
+  "linearWorkspace": "northwind-example",
+  "futureMilestone": {
+   "id": "00000000-0000-0000-0000-00000000f001",
+   "name": "Future Enhancements"
+  },
+  "newStoryMilestone": {
+   "id": "00000000-0000-0000-0000-00000000a002",
+   "name": "Iteration 2"
+  },
+  "backlogState": "Backlog",
+  "slackChannelId": "C00000EXAMPLE",
+  "slackChannelName": "onboarding-tracker",
+  "ownerName": "Sam Rivera",
+  "approvers": [
+   {
+    "name": "Alex Chen",
+    "slackId": "U00000AAA01"
+   },
+   {
+    "name": "Jordan Patel",
+    "slackId": "U00000BBB02"
+   }
+  ],
+  "headings": {
+   "acceptance": "Acceptance criteria",
+   "questions": "Open questions"
+  }
+ },
+ "statusNote": "The My Work page shipped to the test environment this week. Feedback that repeats last week's approved updates is left out.",
+ "decisions": [
+  {
+   "id": "D1",
+   "title": "Heat map: now or later?",
+   "body": "NW-104 keeps reporting to preset filters for the MVP. Dana asked for a heat map of at-risk work on the timeline.",
+   "rec": "Proposed: future enhancement. The overdue filter covers the MVP."
+  }
+ ],
+ "feedback": [
+  {
+   "n": "F1",
+   "label": "Filter by several statuses",
+   "summary": "Step owners can filter their steps by more than one status at once, across all their clients.",
+   "t": "Asked to see every not-started and in-progress step together, without blocked ones, so they know what they can work on today.",
+   "who": "Tomas (Operations)",
+   "by": "Tomas"
+  },
+  {
+   "n": "F2",
+   "label": "Team view for every member",
+   "summary": "Everyone on a team can see their teammates' steps, so they can cover absences.",
+   "t": "The team uses a shared mailbox today so anyone can cover for someone who is away. Asked for a team view open to every member, not only the lead.",
+   "who": "Dana (Team lead)",
+   "by": "Dana"
+  },
+  {
+   "n": "F3",
+   "label": "Risk heat map",
+   "summary": "The project timeline highlights at-risk and coming-due work before a date slips.",
+   "t": "Asked whether the timeline will show what is at risk or coming due, so attention goes there first.",
+   "who": "Attendee",
+   "by": "Attendee"
+  },
+  {
+   "n": "F4",
+   "label": "Upload from the step",
+   "summary": "Step owners attach a file on the step and it lands in the client's folder.",
+   "t": "Liked that the upload went straight to the client folder. Asked that this stays the only way files get there.",
+   "who": "Priya (Implementation PM)",
+   "by": "Priya",
+   "covered": "the step upload shown in this week's demo"
+  }
+ ],
+ "stories": {
+  "US-03": {
+   "ticket": "NW-101",
+   "title": "See my work across clients",
+   "st": "fly",
+   "lin": "In Progress",
+   "build": "My Work page built: by-status and by-client views.",
+   "desc": "## Description\n\nAs a step owner, I can open one view of everything assigned to me.\n\n## Acceptance criteria\n\n* By default I only see the steps I am assigned to.\n* I can see which of my steps are overdue.\n\n## Open questions\n\n* Should this be the default home page?\n\n## User persona\n\nStep owner"
+  },
+  "US-07": {
+   "ticket": "NW-102",
+   "title": "See my team's queue",
+   "st": "up",
+   "lin": "Backlog",
+   "build": "Not started.",
+   "desc": "## Description\n\nAs a team lead, I can see every client my team is on and assign my people against it.\n\n## Acceptance criteria\n\n* I can see every client my team is assigned to in one list.\n* I can assign a step to a named person on my team.\n\n## User persona\n\nTeam lead"
+  },
+  "US-09": {
+   "ticket": "NW-103",
+   "title": "Attach a document to a step",
+   "st": "fly",
+   "lin": "In Progress",
+   "build": "Upload to the client folder demoed.",
+   "desc": "## Description\n\nAs a step owner, I can attach the document my step produced, and it lands in the client's folder.\n\n## Acceptance criteria\n\n* Dropping a file on the step uploads it to the client's folder.\n* Re-uploading a file with the same name creates a new version.\n\n## User persona\n\nStep owner"
+  }
+ },
+ "edits": [
+  {
+   "id": "e01",
+   "us": "US-03",
+   "op": "ac_add",
+   "fb": [
+    "F1"
+   ],
+   "txt": "I can filter my steps by more than one status at once, across all my clients or for one client."
+  },
+  {
+   "id": "e02",
+   "us": "US-03",
+   "op": "oq_add",
+   "fb": [
+    "F1"
+   ],
+   "txt": "Should the steps I can act on sort by due date or by how much downstream work they unblock? Alex to propose, Tomas to confirm."
+  },
+  {
+   "id": "e03",
+   "us": "US-07",
+   "op": "ac_add",
+   "fb": [
+    "F2"
+   ],
+   "txt": "Every member of a team can open the team view and see each teammate's assigned steps, so they can cover absences."
+  },
+  {
+   "id": "e04",
+   "us": "US-07",
+   "op": "context",
+   "fb": [
+    "F2"
+   ],
+   "txt": "The team uses a shared mailbox today so teammates can cover each other. Steps go to one person in the tool, so this view replaces the mailbox (Dana, 15 Jan)."
+  },
+  {
+   "id": "e05",
+   "op": "new_story",
+   "fb": [
+    "F3"
+   ],
+   "dec": [
+    "D1"
+   ],
+   "title": "See at-risk and coming-due work on the timeline",
+   "txt": "## Description\n\nAs an implementation lead, I can see on the project timeline which steps are at risk and which are coming due, so I can act before a date slips.\n\n## Acceptance criteria\n\n* The timeline highlights overdue, at-risk and coming-due steps.\n* I can see the highlight for one client or across all my clients.\n\n## Open questions\n\n* What counts as at risk? Confirm with the PMs.\n\n## User persona\n\nImplementation lead"
+  },
+  {
+   "id": "e06",
+   "us": "US-09",
+   "op": "ac_add",
+   "fb": [
+    "F4"
+   ],
+   "txt": "Uploading through the step is the only way files reach the client folder; direct edits in the folder are blocked."
+  }
+ ],
+ "gaps": [
+  "This is example data for a fictional team. Names, tickets and IDs are made up."
+ ],
+ "sources": [
+  {
+   "label": "Focus group, 15 Jan 2026",
+   "url": "https://notes.granola.ai/d/00000000-0000-0000-0000-000000000000"
+  }
+ ]
+}

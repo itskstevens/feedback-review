@@ -1,0 +1,822 @@
+<title>Northwind focus group, 15 Jan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one review column. Three steps up top, feedback cards with tick boxes, parked list, sticky apply bar with a Slack preview */
+:root{
+  --bg:#F4F6F9; --surface:#FFFFFF; --ink:#15202C; --muted:#586577; --line:#D9DFE7; --accent:#1D5FA8; --accent-soft:#E6EEF8;
+  --fly:#8F5A00; --fly-bg:#FFF2D6; --up:#43536A; --up-bg:#E9EEF4; --cut:#9A3434; --cut-bg:#FBE8E8; --ok:#1F7A4D; --ok-bg:#E2F4EA; --dec:#6B3FA0; --dec-bg:#F1EAFA;
+  --f-display:"Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10161E; --surface:#18212C; --ink:#E6EBF1; --muted:#9AA7B8; --line:#2A3644; --accent:#7FB0F0; --accent-soft:#1C2C42;
+  --fly:#F2C06B; --fly-bg:#3A2C10; --up:#B3C0D2; --up-bg:#243040; --cut:#F09A9A; --cut-bg:#3A1C1E; --ok:#7FD3A6; --ok-bg:#163326; --dec:#C9A8F2; --dec-bg:#2C2140; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10161E; --surface:#18212C; --ink:#E6EBF1; --muted:#9AA7B8; --line:#2A3644; --accent:#7FB0F0; --accent-soft:#1C2C42;
+  --fly:#F2C06B; --fly-bg:#3A2C10; --up:#B3C0D2; --up-bg:#243040; --cut:#F09A9A; --cut-bg:#3A1C1E; --ok:#7FD3A6; --ok-bg:#163326; --dec:#C9A8F2; --dec-bg:#2C2140; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:28px 32px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:36px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(1.6rem,4vw,2.2rem)} h2{font-size:1.3rem} h3{font-size:1.05rem}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-size:.85em}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+header{display:flex;flex-direction:column;gap:12px}
+.lede{color:var(--muted);max-width:70ch}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px 12px 46px;position:relative;font-size:.93rem}
+.steps li::before{content:counter(s);position:absolute;left:14px;top:11px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--surface);font-family:var(--f-mono);font-size:.8rem;display:grid;place-items:center}
+.steps b{display:block;font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.stat{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.stat .n{font-family:var(--f-display);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.stat .l{font-size:.85rem;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:14px}
+.sec-head{display:flex;flex-direction:column;gap:4px}
+.note{font-size:.92rem;color:var(--muted);max-width:74ch}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;white-space:nowrap;text-decoration:none}
+.pill.fly{background:var(--fly-bg);color:var(--fly)} .pill.up{background:var(--up-bg);color:var(--up)} .pill.cut{background:var(--cut-bg);color:var(--cut)} .pill.dec{background:var(--dec-bg);color:var(--dec)} .pill.lin{border:1px solid var(--line);color:var(--muted)} .pill.done{background:var(--ok-bg);color:var(--ok)} .pill.park{background:var(--dec-bg);color:var(--dec)}
+details.box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px}
+details.box summary{cursor:pointer;font-family:var(--f-display);font-weight:500}
+.declist{display:grid;gap:10px;margin-top:12px}
+.decision{border-left:4px solid var(--dec);padding:4px 0 4px 12px;display:grid;gap:4px}
+.decision .tag{font-family:var(--f-mono);font-size:.78rem;color:var(--dec)}
+.decision .rec{font-size:.93rem}
+.groups{display:flex;flex-direction:column;gap:16px}
+.group{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.ghead{display:grid;grid-template-columns:1fr auto;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);align-items:start}
+.ghead .gt{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ghead .fid{font-family:var(--f-mono);font-size:.78rem;color:var(--accent)}
+.ghead .quote{font-size:.92rem;color:var(--muted)}
+.ghead .who{font-size:.85rem;color:var(--muted)}
+.master{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:600;white-space:nowrap;cursor:pointer}
+.master input,.row input[type=checkbox]{width:18px;height:18px;accent-color:var(--ok);cursor:pointer}
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:12px 16px;border-top:1px solid var(--line);align-items:start}
+.row:first-child{border-top:0}
+.row.on{background:var(--ok-bg)}
+.row.applied{opacity:.75}
+.row.parked{background:var(--bg)}
+.row.parked .txt{color:var(--muted)}
+.row .body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.row .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.row .tk{font-family:var(--f-mono);font-size:.78rem;color:var(--ink);text-decoration:none;background:var(--accent-soft);padding:2px 7px;border-radius:4px}
+.kind{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
+.row .old{font-size:.86rem;color:var(--muted);text-decoration:line-through}
+.row .txt{font-size:.95rem;cursor:pointer}
+.src{font-size:.8rem;color:var(--muted)}
+.rowact{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin-top:2px}
+.link{font:inherit;font-size:.84rem;background:none;border:0;padding:0;color:var(--accent);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.link[disabled]{color:var(--muted);text-decoration:none;cursor:not-allowed}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:.9rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+.reason{width:100%;min-width:160px;font:inherit;font-size:.88rem;padding:5px 8px;border:1px solid var(--line);border-radius:5px;background:var(--surface);color:var(--ink);margin-bottom:4px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:8px;padding:14px 16px;max-width:none}
+.gaps ul,.sources ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:.92rem}
+.sources{color:var(--muted)}
+.bar{position:sticky;bottom:0;margin-bottom:env(safe-area-inset-bottom,0px);display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;box-shadow:0 6px 24px rgba(10,20,40,.14)}
+.barrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.tally{font-size:.92rem;font-variant-numeric:tabular-nums}
+.btn{font:inherit;font-weight:600;font-size:.9rem;padding:8px 14px;border-radius:6px;border:1px solid transparent;cursor:pointer}
+.btn.primary{background:var(--accent);color:var(--surface)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.go{background:var(--ok);color:var(--surface)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.panel{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line);padding-top:12px;max-height:62vh;overflow:auto}
+.panel h3{font-size:.98rem}
+.plan{display:flex;flex-direction:column;gap:4px;font-size:.88rem}
+.plan .pr{display:grid;grid-template-columns:120px 1fr auto;gap:10px;align-items:baseline;padding:4px 0;border-bottom:1px dashed var(--line)}
+.plan .pr:last-child{border-bottom:0}
+.plan .msg{color:var(--muted);font-size:.84rem;min-width:0}
+.slack{display:flex;flex-direction:column;gap:8px}
+.slack label.sl{font-size:.82rem;color:var(--muted);font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.05em}
+.slack textarea{width:100%;font-family:var(--f-body);font-size:.9rem;line-height:1.45;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 10px;resize:vertical}
+#slackmain{min-height:70px} #slackthread{min-height:180px}
+.check{display:flex;gap:8px;align-items:center;font-size:.9rem;font-weight:600;cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--accent)}
+.warn{font-size:.88rem;color:var(--cut)}
+.okmsg{font-size:.9rem;color:var(--ok)}
+.approvers{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.appr{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.apprhead{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.rep{font-size:.88rem;border-left:3px solid var(--line);padding-left:8px;overflow-wrap:anywhere}
+.fld{display:flex;flex-direction:column;gap:6px}
+#slackapproval{min-height:160px} #slackfinal{min-height:80px}
+details.ctx{margin-top:4px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+details.ctx summary{cursor:pointer;font-size:.84rem;color:var(--accent);padding:6px 10px}
+.ctxbody{padding:4px 12px 12px;display:flex;flex-direction:column;gap:6px;font-size:.88rem}
+.ctxbody h4{margin:6px 0 0;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.ctxbody ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+.ctxbody .story{font-size:.93rem}
+.ctxbody li.new{background:var(--ok-bg);border-radius:4px;padding:1px 4px}
+.ctxbody li.gone{color:var(--muted);text-decoration:line-through}
+.ctxbody li.muted{color:var(--muted)}
+.ctxbody .chg{font-family:var(--f-mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ok);text-decoration:none;display:inline-block}
+.ctxbody li.gone .chg{color:var(--cut)}
+.ctxbody code{font-family:var(--f-mono);font-size:.85em}
+#copyout{width:100%;min-height:110px;font-family:var(--f-mono);font-size:.8rem;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px}
+.row.two{grid-template-columns:1fr}
+.choice{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:4px}
+.choice label{display:inline-flex;align-items:center;gap:7px;font-size:.88rem;font-weight:600;cursor:pointer;padding:4px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.choice label.sel{border-color:var(--ok);color:var(--ok)}
+.choice input{width:17px;height:17px;accent-color:var(--ok);cursor:pointer}
+.choice input:disabled,.choice input:disabled+span{cursor:not-allowed;opacity:.6}
+.row.future{background:var(--dec-bg)}
+.choice label.self{border-color:var(--dec);color:var(--dec)}
+.choice label.self input{accent-color:var(--dec)}
+.pill.fut{background:var(--dec-bg);color:var(--dec)}
+.pill.cov{background:var(--ok-bg);color:var(--ok)}
+.row.covered{background:var(--bg)}
+.row.covered .txt{color:var(--muted);text-decoration:line-through}
+.covnote{width:100%;font:inherit;font-size:.86rem;padding:4px 8px;border:1px solid var(--line);border-radius:5px;background:var(--surface);color:var(--ink)}
+@media (max-width:560px){.ghead{grid-template-columns:1fr}.plan .pr{grid-template-columns:1fr auto}.plan .pr .msg{grid-column:1/-1}}
+</style>
+
+<style>
+.card-choice{display:flex;flex-wrap:wrap;gap:8px 12px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--bg)}
+.card-choice label{display:inline-flex;align-items:center;gap:8px;font-size:.92rem;font-weight:600;cursor:pointer;padding:6px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.card-choice input{width:18px;height:18px;cursor:pointer}
+.card-choice label.c-new.sel{border-color:var(--ok);color:var(--ok)} .card-choice label.c-new input{accent-color:var(--ok)}
+.card-choice label.c-fut.sel{border-color:var(--dec);color:var(--dec)} .card-choice label.c-fut input{accent-color:var(--dec)}
+.card-choice label.c-cov.sel{border-color:var(--accent);color:var(--accent)} .card-choice label.c-cov input{accent-color:var(--accent)}
+.card-choice label.c-disc.sel{border-color:var(--fly);color:var(--fly)} .card-choice label.c-disc input{accent-color:var(--fly)}
+.card-choice input:disabled{cursor:not-allowed}
+.group.k-disc{border-color:var(--fly)} .group.k-disc .rows{opacity:.7}
+.pill.disc{background:var(--fly-bg);color:var(--fly)}
+.card-choice .covnote{flex:1 1 220px;min-width:180px;align-self:stretch;padding:6px 10px}
+.group.k-new{border-color:var(--ok)} .group.k-fut{border-color:var(--dec)} .group.k-cov{border-color:var(--accent)}
+.group.k-cov .rows,.group.k-fut .rows{opacity:.7}
+.ghead .sum{font-size:.95rem}
+.rows .row{grid-template-columns:1fr}
+.chg-head{padding:10px 16px 0;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pill.fut{background:var(--dec-bg);color:var(--dec)} .pill.cov{background:var(--accent-soft);color:var(--accent)} .pill.new{background:var(--ok-bg);color:var(--ok)} .pill.none{border:1px solid var(--cut);color:var(--cut)}
+.covnote{font:inherit;font-size:.88rem;padding:5px 8px;border:1px solid var(--line);border-radius:5px;background:var(--surface);color:var(--ink)}
+.newstory{border-left:3px solid var(--ok);padding-left:10px;font-size:.9rem;white-space:pre-wrap}
+</style>
+
+<script type="application/json" id="audit-data">{"session": {"id": "2026-01-15", "dateLabel": "15 Jan 2026", "weekday": "Thursday", "meetingTitle": "Northwind Onboarding: Weekly Focus Group", "meetingUrl": "https://notes.granola.ai/d/00000000-0000-0000-0000-000000000000", "demoTopic": "the My Work page and step documents", "program": "Northwind Onboarding", "shortName": "Northwind", "sessionName": "focus group", "team": "NW", "project": "Onboarding Tracker", "milestone": "MVP Build", "linearWorkspace": "northwind-example", "futureMilestone": {"id": "00000000-0000-0000-0000-00000000f001", "name": "Future Enhancements"}, "newStoryMilestone": {"id": "00000000-0000-0000-0000-00000000a002", "name": "Iteration 2"}, "backlogState": "Backlog", "slackChannelId": "C00000EXAMPLE", "slackChannelName": "onboarding-tracker", "ownerName": "Sam Rivera", "approvers": [{"name": "Alex Chen", "slackId": "U00000AAA01"}, {"name": "Jordan Patel", "slackId": "U00000BBB02"}], "headings": {"acceptance": "Acceptance criteria", "questions": "Open questions"}}, "statusNote": "The My Work page shipped to the test environment this week. Feedback that repeats last week's approved updates is left out.", "decisions": [{"id": "D1", "title": "Heat map: now or later?", "body": "NW-104 keeps reporting to preset filters for the MVP. Dana asked for a heat map of at-risk work on the timeline.", "rec": "Proposed: future enhancement. The overdue filter covers the MVP."}], "feedback": [{"n": "F1", "label": "Filter by several statuses", "summary": "Step owners can filter their steps by more than one status at once, across all their clients.", "t": "Asked to see every not-started and in-progress step together, without blocked ones, so they know what they can work on today.", "who": "Tomas (Operations)", "by": "Tomas"}, {"n": "F2", "label": "Team view for every member", "summary": "Everyone on a team can see their teammates' steps, so they can cover absences.", "t": "The team uses a shared mailbox today so anyone can cover for someone who is away. Asked for a team view open to every member, not only the lead.", "who": "Dana (Team lead)", "by": "Dana"}, {"n": "F3", "label": "Risk heat map", "summary": "The project timeline highlights at-risk and coming-due work before a date slips.", "t": "Asked whether the timeline will show what is at risk or coming due, so attention goes there first.", "who": "Attendee", "by": "Attendee"}, {"n": "F4", "label": "Upload from the step", "summary": "Step owners attach a file on the step and it lands in the client's folder.", "t": "Liked that the upload went straight to the client folder. Asked that this stays the only way files get there.", "who": "Priya (Implementation PM)", "by": "Priya", "covered": "the step upload shown in this week's demo"}], "stories": {"US-03": {"ticket": "NW-101", "title": "See my work across clients", "st": "fly", "lin": "In Progress", "build": "My Work page built: by-status and by-client views.", "desc": "## Description\n\nAs a step owner, I can open one view of everything assigned to me.\n\n## Acceptance criteria\n\n* By default I only see the steps I am assigned to.\n* I can see which of my steps are overdue.\n\n## Open questions\n\n* Should this be the default home page?\n\n## User persona\n\nStep owner"}, "US-07": {"ticket": "NW-102", "title": "See my team's queue", "st": "up", "lin": "Backlog", "build": "Not started.", "desc": "## Description\n\nAs a team lead, I can see every client my team is on and assign my people against it.\n\n## Acceptance criteria\n\n* I can see every client my team is assigned to in one list.\n* I can assign a step to a named person on my team.\n\n## User persona\n\nTeam lead"}, "US-09": {"ticket": "NW-103", "title": "Attach a document to a step", "st": "fly", "lin": "In Progress", "build": "Upload to the client folder demoed.", "desc": "## Description\n\nAs a step owner, I can attach the document my step produced, and it lands in the client's folder.\n\n## Acceptance criteria\n\n* Dropping a file on the step uploads it to the client's folder.\n* Re-uploading a file with the same name creates a new version.\n\n## User persona\n\nStep owner"}}, "edits": [{"id": "e01", "us": "US-03", "op": "ac_add", "fb": ["F1"], "txt": "I can filter my steps by more than one status at once, across all my clients or for one client."}, {"id": "e02", "us": "US-03", "op": "oq_add", "fb": ["F1"], "txt": "Should the steps I can act on sort by due date or by how much downstream work they unblock? Alex to propose, Tomas to confirm."}, {"id": "e03", "us": "US-07", "op": "ac_add", "fb": ["F2"], "txt": "Every member of a team can open the team view and see each teammate's assigned steps, so they can cover absences."}, {"id": "e04", "us": "US-07", "op": "context", "fb": ["F2"], "txt": "The team uses a shared mailbox today so teammates can cover each other. Steps go to one person in the tool, so this view replaces the mailbox (Dana, 15 Jan)."}, {"id": "e05", "op": "new_story", "fb": ["F3"], "dec": ["D1"], "title": "See at-risk and coming-due work on the timeline", "txt": "## Description\n\nAs an implementation lead, I can see on the project timeline which steps are at risk and which are coming due, so I can act before a date slips.\n\n## Acceptance criteria\n\n* The timeline highlights overdue, at-risk and coming-due steps.\n* I can see the highlight for one client or across all my clients.\n\n## Open questions\n\n* What counts as at risk? Confirm with the PMs.\n\n## User persona\n\nImplementation lead"}, {"id": "e06", "us": "US-09", "op": "ac_add", "fb": ["F4"], "txt": "Uploading through the step is the only way files reach the client folder; direct edits in the folder are blocked."}], "gaps": ["This is example data for a fictional team. Names, tickets and IDs are made up."], "sources": [{"label": "Focus group, 15 Jan 2026", "url": "https://notes.granola.ai/d/00000000-0000-0000-0000-000000000000"}]}</script>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow" id="eyebrow">Feedback review</span>
+  <h1 id="h1">Feedback review</h1>
+  <p class="lede" id="lede"></p>
+  <ol class="steps">
+    <li><b>Classify each piece of feedback</b>New requirement updates the user stories. Future enhancement logs one ticket in the Future Enhancements milestone. Still needs discussion marks requirements we're still working through. Already covered in app and Still needs discussion change nothing in Linear.</li>
+    <li><b>Send for dev approval</b>Future enhancements get logged. A post goes to the project channel listing every group, and the devs are asked to approve the new requirements.</li>
+    <li><b>Apply once they approve</b>Check their replies here and move anything they held back. Then the new requirements go into the user stories in Linear.</li>
+  </ol>
+</header>
+
+<div class="stats" id="stats"></div>
+
+<section id="approvalsec" hidden>
+  <div class="sec-head">
+    <span class="eyebrow">Dev approval</span>
+    <h2 id="apptitle">Waiting on dev approval</h2>
+    <p class="note" id="appnote"></p>
+  </div>
+  <div class="approvers" id="approvers"></div>
+  <div class="btns"><button type="button" class="btn ghost" id="checkbtn">Check the Slack thread</button><a class="link" id="threadlink" href="#" target="_blank" rel="noopener" hidden>Open the thread in Slack</a></div>
+  <p class="warn" id="appwarn" hidden></p>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Before you classify</span>
+    <h2>Calls behind some feedback</h2>
+    <p class="note" id="statusnote"></p>
+  </div>
+  <details class="box" id="decwrap"><summary id="decsummary">Show the decisions</summary><div class="declist" id="decisions"></div></details>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">By feedback</span>
+    <h2>Classify the feedback</h2>
+    <p class="note">Pick one box per piece of feedback. Still needs discussion is for requirements we're actively working through; it changes nothing in Linear and shows in Slack as no action yet. Under each card, "What changes in Linear" shows the story updates a new requirement would make. You can send once every piece of feedback is classified.</p>
+  </div>
+  <div class="groups" id="groups"></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <span class="eyebrow">Context</span>
+    <h2>Stories touched</h2>
+  </div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Story</th><th>Ticket</th><th>State</th><th>What exists today</th><th>New requirement updates</th></tr></thead>
+    <tbody id="storytable"></tbody>
+  </table></div>
+</section>
+
+<section id="futuresec">
+  <div class="sec-head">
+    <span class="eyebrow" id="futurecount">Future enhancements</span>
+    <h2>Logged as future enhancements</h2>
+    <p class="note" id="futurenote"></p>
+  </div>
+  <p class="warn" id="futmsg" hidden></p>
+  <div id="futurelist"></div>
+</section>
+
+<section id="coveredsec" hidden>
+  <div class="sec-head">
+    <span class="eyebrow" id="coveredcount">Already covered</span>
+    <h2>Already covered by what we're building</h2>
+    <p class="note">Nothing here goes into Linear. The Slack summary lists each one once under "Already covered by what we're building", with the note you add on its card.</p>
+  </div>
+  <div id="coveredlist"></div>
+</section>
+
+<section class="gaps" id="gapsec">
+  <div class="sec-head"><span class="eyebrow">Not covered here</span><h2>Gaps in this review</h2></div>
+  <ul id="gaps"></ul>
+</section>
+
+<section class="sources">
+  <span class="eyebrow">Sources</span>
+  <ul id="sources"></ul>
+</section>
+
+<div class="bar" id="bar">
+  <div class="barrow">
+    <span class="tally" id="tally"></span>
+    <div class="btns">
+      <button type="button" class="btn ghost" id="copybtn">Copy list</button>
+      <button type="button" class="btn primary" id="reviewbtn">Send for dev approval</button>
+    </div>
+  </div>
+  <div class="panel" id="panel" hidden>
+    <h3 id="panelh">Send for dev approval</h3>
+    <p class="note" id="panelnote"></p>
+    <div class="plan" id="plan"></div>
+    <div class="slack">
+      <div class="fld" id="f-main"><label class="sl" for="slackmain">Channel post</label><textarea id="slackmain"></textarea></div>
+      <div class="fld" id="f-thread"><label class="sl" for="slackthread">Thread reply 1: summary</label><textarea id="slackthread"></textarea></div>
+      <div class="fld" id="f-approval"><label class="sl" for="slackapproval">Thread reply 2: approval request</label><textarea id="slackapproval"></textarea><p class="src">The tags notify each dev. You can edit any of this before sending.</p></div>
+      <div class="fld" id="f-final"><label class="sl" for="slackfinal">Thread reply once applied</label><textarea id="slackfinal"></textarea></div>
+      <label class="check" id="f-confirm"><input type="checkbox" id="approvedchk"> The devs have approved in the Slack thread</label>
+    </div>
+    <p class="warn" id="panelwarn" hidden></p>
+    <p class="okmsg" id="panelok" hidden></p>
+    <div class="btns">
+      <button type="button" class="btn go" id="applybtn">Send for approval</button>
+      <button type="button" class="btn ghost" id="cancelbtn">Close</button>
+    </div>
+  </div>
+  <textarea id="copyout" hidden readonly aria-label="Classified feedback"></textarea>
+</div>
+</div>
+
+<script>
+/* ---------- data ---------- */
+const DATA = JSON.parse(document.getElementById("audit-data").textContent);
+const SES = DATA.session, FEEDBACK = DATA.feedback, DECISIONS = DATA.decisions || [], STORIES = DATA.stories, EDITS = DATA.edits;
+const MEET = SES.meetingUrl;
+const TEAM = SES.team, PROJECT = SES.project;
+const SN = SES.sessionName || "feedback session", SHORT = `${SES.shortName || SES.program || "Team"} ${SN}`;
+const cap = t => t ? t[0].toUpperCase() + t.slice(1) : t;
+const FUT_MS = SES.futureMilestone;
+const NEW_MS = SES.newStoryMilestone;
+const CHANNEL = SES.slackChannelId;
+const LIN = id => `https://linear.app/${SES.linearWorkspace}/issue/${id}`;
+const KIND = {ac_add:"Add acceptance criterion", ac_change:"Change acceptance criterion", oq_add:"Add open question", oq_resolve:"Resolve open question", context:"Add context note", new_story:"New user story"};
+const CLS = {new:"New requirement", fut:"Future enhancement", disc:"Still needs discussion", cov:"Already covered in app"};
+const CTX_HEAD = `## ${cap(SN)} context (${SES.dateLabel})`;
+const H_AC = (SES.headings||{}).acceptance || "Acceptance criteria", H_OQ = (SES.headings||{}).questions || "Open questions";
+const REF = n => `fbr/${SES.id}/${n}`;
+
+/* ---------- review state: kept in this page's store so it survives across days and devices ---------- */
+const KEY = "fbr-" + SES.id;
+const APPROVERS = SES.approvers || [];
+const BLANK = () => ({cls:{}, covNote:{}, logged:{}, applied:{}, created:{}, phase:"draft", sent:[], slack:null, approvedAt:null});
+let S = BLANK();
+try { const raw = JSON.parse(localStorage.getItem(KEY) || "null"); if (raw && raw.cls) S = Object.assign(BLANK(), raw); } catch(e) {}
+if (!S.init) { FEEDBACK.forEach(f=>{ if (f.covered) { S.cls[f.n] = "cov"; S.covNote[f.n] = f.covered; } }); S.init = true; }
+let DB = null, saveTimer = null, lastSaved = "";
+const save = () => {
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {}
+  if (!DB) return;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>{ const body = JSON.parse(JSON.stringify(S)); lastSaved = JSON.stringify(body); DB.doc("review/state").set(body).catch(()=>{}); }, 300);
+};
+const esc = s => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+const pill = st => st==="fly" ? '<span class="pill fly">In flight</span>' : st==="up" ? '<span class="pill up">Upcoming</span>' : '<span class="pill cut">Descoped</span>';
+const fmtDate = iso => { try { return new Date(iso).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"}); } catch(e){ return ""; } };
+const plural = (n, one, many) => `${n} ${n===1?one:many}`;
+const listJoin = a => a.length>1 ? a.slice(0,-1).join(", ")+" and "+a[a.length-1] : (a[0]||"");
+let MCP = null, running = false, RESULTS = false;
+
+/* ---------- classification helpers ---------- */
+const editsFor = n => EDITS.filter(e=>e.fb.includes(n));
+const cls = n => S.cls[n] || null;
+const sentSet = () => new Set(S.sent || []);
+const canClassify = f => S.phase!=="done" && !S.logged[f.n] && !editsFor(f.n).some(e=>S.applied[e.id]) && (S.phase==="draft" || sentSet().has(f.n) || cls(f.n)==="disc");
+const withCls = c => FEEDBACK.filter(f=>cls(f.n)===c);
+const unclassified = () => FEEDBACK.filter(f=>!cls(f.n));
+const inScope = e => e.fb.some(n=>cls(n)==="new");
+const toApply = () => EDITS.filter(e=>inScope(e) && !S.applied[e.id]);
+const toLog = () => withCls("fut").filter(f=>!S.logged[f.n]);
+const storyKey = e => e.op==="new_story" ? `new:${e.id}` : e.us;
+const storyName = e => e.op==="new_story" ? `New story: ${e.title}` : `${e.us} ${STORIES[e.us].title}`;
+const ticketOf = e => e.op==="new_story" ? (S.created[e.id] || null) : STORIES[e.us].ticket;
+function setCls(n, c){
+  if (c) S.cls[n] = c; else delete S.cls[n];
+  if (c!=="cov") delete S.covNote[n];
+}
+
+/* ---------- static parts ---------- */
+function renderStatic(){
+  document.getElementById("h1").textContent = `${cap(SN)} feedback, ${SES.dateLabel}`;
+  document.getElementById("eyebrow").textContent = `${SES.program || "Feedback"} · ${cap(SN)} review`;
+  document.title = `${SHORT}, ${SES.dateLabel}`;
+  document.getElementById("lede").innerHTML = `Feedback from the ${esc(SES.weekday)} ${esc(SES.dateLabel)} ${esc(SN)} (${esc(SES.demoTopic||"weekly demo")}), mapped to the MVP user stories in Linear (${esc(TEAM)}, ${esc(SES.milestone||PROJECT)}). You classify each piece of feedback. Nothing goes to Slack until you send it for dev approval, and the user stories change only after the devs approve.`;
+  document.getElementById("statusnote").textContent = DATA.statusNote || "";
+  document.getElementById("decsummary").textContent = DECISIONS.length ? `Show the ${DECISIONS.length} decision${DECISIONS.length>1?"s":""} (tagged D1, D2 and so on)` : "No open decisions this week";
+  document.getElementById("decisions").innerHTML = DECISIONS.map(d=>`<div class="decision"><span class="tag">${esc(d.id)}</span><h3>${esc(d.title)}</h3><p class="note">${esc(d.body)}</p><p class="rec">${esc(d.rec)}</p></div>`).join("");
+  document.getElementById("futurenote").textContent = `Each piece of feedback marked Future enhancement becomes one Backlog ticket in the "${FUT_MS.name}" milestone (${TEAM}, ${PROJECT}), linked to the stories it would change. Before you send for approval, Restore cancels the ticket and clears the feedback's box.`;
+  const gaps = DATA.gaps || [];
+  document.getElementById("gapsec").hidden = !gaps.length;
+  document.getElementById("gaps").innerHTML = gaps.map(g=>`<li>${esc(g)}</li>`).join("");
+  document.getElementById("sources").innerHTML = (DATA.sources||[]).map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`).join("") + `<li>MVP user stories in Linear (${esc(TEAM)})</li>`;
+}
+function renderStats(){
+  const vals = Object.values(STORIES);
+  document.getElementById("stats").innerHTML = [
+    [FEEDBACK.length,"pieces of feedback"],[withCls("new").length,"new requirements"],[withCls("fut").length,"future enhancements"],[withCls("disc").length,"still in discussion"],[withCls("cov").length,"already covered"],[vals.length,"stories they touch"]
+  ].map(([n,l])=>`<div class="stat"><span class="n">${n}</span><span class="l">${l}</span></div>`).join("");
+}
+
+/* ---------- story context: what the story says today, and what it would say with this update ---------- */
+function mdInline(s){ return esc(s).replace(/\*\*([^*]+)\*\*/g,"<b>$1</b>").replace(/~~([^~]+)~~/g,"<s>$1</s>").replace(/`([^`]+)`/g,"<code>$1</code>"); }
+function sections(desc){
+  const out = {_:[]}; let cur = "_";
+  (desc||"").split("\n").forEach(line=>{ const h = /^##\s+(.+)$/.exec(line.trim()); if (h) { cur = h[1].trim(); out[cur] = []; return; } out[cur].push(line); });
+  return out;
+}
+const bulletsOf = lines => lines.map(l=>l.trim()).filter(l=>/^[*-]\s+/.test(l)).map(l=>l.replace(/^[*-]\s+/,""));
+const textOf = lines => lines.map(l=>l.trim()).filter(Boolean).join(" ");
+function storyCtx(e){
+  if (e.op==="new_story") return `<details class="ctx"><summary>Story text: ${esc(e.title)}</summary><div class="ctxbody"><p class="src">Created in the ${esc(NEW_MS.name)} milestone if this feedback is a new requirement.</p><div class="newstory">${esc(e.txt)}</div></div></details>`;
+  const s = STORIES[e.us]; if (!s.desc) return "";
+  const out = sections(s.desc);
+  const ac = bulletsOf(out[H_AC]||[]), oq = bulletsOf(out[H_OQ]||[]);
+  const li = (txt, c, tag) => `<li class="${c||""}">${tag?`<span class="chg">${tag}</span> `:""}${mdInline(txt)}</li>`;
+  const listWith = (items, kAdd, kChange, kResolve) => {
+    const rows = items.map(b=>{
+      if (e.old && b.includes(e.old) && e.op===kChange) return li(b,"gone","Replaced") + li(b.replace(e.old, e.txt),"new","Becomes");
+      if (e.old && b.includes(e.old) && e.op===kResolve) return li(b,"gone","Resolved") + li(e.txt,"new","Answer");
+      return li(b);
+    });
+    if (e.op===kAdd) rows.push(li(e.txt,"new","New"));
+    return rows.join("") || '<li class="muted">None yet</li>';
+  };
+  const approach = textOf(out["Recommended approach"]||[]), persona = textOf(out["User persona"]||[]);
+  return `<details class="ctx"><summary>Story context: ${esc(e.us)} ${esc(s.title)}</summary><div class="ctxbody">
+    <p class="story">${mdInline(textOf(out["Description"]||[]))}</p>
+    <p class="src">${esc(s.ticket)} · Linear: ${esc(s.lin||"Unknown")} · ${esc(s.build||"")}${persona?` · Persona: ${esc(persona)}`:""}</p>
+    <h4>${esc(H_AC)}${["ac_add","ac_change"].includes(e.op)?" (with this update)":""}</h4><ul>${listWith(ac,"ac_add","ac_change","")}</ul>
+    <h4>${esc(H_OQ)}${["oq_add","oq_resolve"].includes(e.op)?" (with this update)":""}</h4><ul>${listWith(oq,"oq_add","","oq_resolve")}</ul>
+    ${e.op==="context"?`<h4>${esc(cap(SN))} context (new section)</h4><ul>${li(e.txt,"new","New")}</ul>`:""}
+    ${approach?`<h4>Recommended approach</h4><p>${mdInline(approach)}</p>`:""}
+  </div></details>`;
+}
+
+/* ---------- feedback cards ---------- */
+function editRow(e){
+  const t = ticketOf(e), ap = S.applied[e.id];
+  const chip = e.op==="new_story" ? `<span class="tk">${t?`<a href="${LIN(t)}" target="_blank" rel="noopener">${esc(t)}</a>`:"New story"}</span>` : `<a class="tk" href="${LIN(t)}" target="_blank" rel="noopener">${esc(e.us)} · ${esc(t)}</a>${pill(STORIES[e.us].st)}`;
+  return `<div class="row${ap?" applied":""}"><span class="body">
+    <span class="meta">${chip}<span class="kind">${KIND[e.op]}</span>${(e.dec||[]).map(d=>`<span class="pill dec">${esc(d)}</span>`).join("")}${ap?'<span class="pill done">Applied</span>':""}${e.fb.length>1?`<span class="src">Shared with ${esc(e.fb.join(", "))}</span>`:""}</span>
+    ${e.old?`<span class="old">${esc(e.old)}</span>`:""}
+    <span class="txt">${esc(e.op==="new_story"?e.title:e.txt)}</span>
+    ${storyCtx(e)}
+  </span></div>`;
+}
+let OPEN_CTX = new Set();
+document.addEventListener("toggle", ev=>{ const d = ev.target; if (d.classList && d.classList.contains("ctx")) { const k = d.dataset.k; if (k) d.open ? OPEN_CTX.add(k) : OPEN_CTX.delete(k); } }, true);
+function renderGroups(){
+  document.getElementById("groups").innerHTML = FEEDBACK.map(f=>{
+    const es = editsFor(f.n), c = cls(f.n), ok = canClassify(f), lg = S.logged[f.n];
+    const lockNew = S.phase==="awaiting" && !sentSet().has(f.n);
+    const box = (k, label) => `<label class="c-${k}${c===k?" sel":""}"${k==="new"&&lockNew?' title="Not sent for approval this round. Bring it to next week\'s review."':""}><input type="checkbox" data-cls="${k}" data-fb="${f.n}" ${c===k?"checked":""} ${ok&&!(k==="new"&&lockNew)?"":"disabled"}> ${label}</label>`;
+    const tag = c ? `<span class="pill ${c}">${CLS[c]}</span>` : '<span class="pill none">Not classified</span>';
+    return `<div class="group${c?" k-"+c:""}">
+      <div class="ghead"><div class="gt"><span class="fid">${esc(f.n)} ${tag}${lg?` <a class="mono" href="${esc(lg.url||LIN(lg.id))}" target="_blank" rel="noopener">${esc(lg.id)}</a>`:""}</span><h3>${esc(f.label)}</h3><span class="sum">${esc(f.summary)}</span><span class="quote">${esc(f.t)}</span><span class="who">${esc(f.who)} · ${plural(es.length,"story update","story updates")}</span></div></div>
+      <div class="card-choice">${box("new","New requirement")}${box("fut","Future enhancement")}${box("disc","Still needs discussion")}${box("cov","Already covered in app")}${c==="cov"?`<input type="text" class="covnote" data-covnote="${f.n}" value="${esc(S.covNote[f.n]||"")}" placeholder="Covered by, for example: My Works page" maxlength="200" aria-label="What covers ${esc(f.label)}">`:""}</div>
+      <div class="chg-head">What changes in Linear if it's a new requirement</div>
+      <div class="rows">${es.map(e=>editRow(e).replace('<details class="ctx"', `<details class="ctx" data-k="${f.n}-${e.id}"${OPEN_CTX.has(f.n+"-"+e.id)?" open":""}`)).join("")}</div></div>`;
+  }).join("");
+}
+function renderStories(){
+  document.getElementById("storytable").innerHTML = Object.entries(STORIES).map(([us,s])=>{
+    const es = EDITS.filter(e=>e.us===us), n = es.filter(inScope).length;
+    return `<tr><td><b>${esc(us)}</b><br><span class="note">${esc(s.title)}</span></td><td><a class="mono" href="${LIN(s.ticket)}" target="_blank" rel="noopener">${esc(s.ticket)}</a><br><span class="pill lin">Linear: ${esc(s.lin||"Unknown")}</span></td><td>${pill(s.st)}</td><td>${esc(s.build)}</td><td class="mono">${n} of ${es.length}</td></tr>`;
+  }).join("");
+}
+function renderFuture(){
+  const list = FEEDBACK.filter(f=>S.logged[f.n]), waiting = toLog();
+  document.getElementById("futurecount").textContent = `${list.length} logged in Linear`;
+  document.getElementById("futurelist").innerHTML = (list.length ? `<div class="tablewrap"><table><thead><tr><th>Ticket</th><th>Feedback</th><th>Stories it would change</th><th></th></tr></thead><tbody>${list.map(f=>{
+    const lg = S.logged[f.n], st = [...new Set(editsFor(f.n).filter(e=>e.us).map(e=>e.us))].join(", ");
+    return `<tr><td><a class="mono" href="${esc(lg.url||LIN(lg.id))}" target="_blank" rel="noopener">${esc(lg.id)}</a><br><span class="src">${fmtDate(lg.at)}</span></td><td><b>${esc(f.label)}</b><br><span class="note">${esc(f.summary)}</span></td><td class="mono">${esc(st||"New story")}</td><td>${S.phase==="draft"?`<button type="button" class="link" data-restore="${f.n}">Restore</button>`:""}</td></tr>`;
+  }).join("")}</tbody></table></div>` : "") + (waiting.length ? `<p class="note empty">${plural(waiting.length,"piece of feedback is","pieces of feedback are")} marked Future enhancement and get${waiting.length===1?"s":""} logged when you send: ${esc(waiting.map(f=>f.label).join(", "))}.</p>` : (list.length ? "" : `<p class="note empty">Nothing logged yet.</p>`));
+}
+function renderCovered(){
+  const list = withCls("cov");
+  document.getElementById("coveredsec").hidden = !list.length;
+  document.getElementById("coveredcount").textContent = `${list.length} already covered`;
+  document.getElementById("coveredlist").innerHTML = list.length ? `<ul class="note" style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px">${list.map(f=>`<li><b>${esc(f.label)}</b> (${esc(f.by||f.who)})${S.covNote[f.n]?`: covered by ${esc(S.covNote[f.n])}`:""}</li>`).join("")}</ul>` : "";
+}
+const PHASE_BTN = {draft:"Send for dev approval", awaiting:"Apply to Linear", done:"Applied"};
+function tally(){
+  const un = unclassified().length, tickets = new Set(EDITS.filter(inScope).map(storyKey)).size;
+  const phaseTxt = S.phase==="awaiting" ? " · waiting on dev approval" : S.phase==="done" ? " · applied" : "";
+  document.getElementById("tally").textContent = `${plural(withCls("new").length,"new requirement","new requirements")} (${plural(tickets,"story","stories")}) · ${plural(withCls("fut").length,"future enhancement","future enhancements")} · ${withCls("disc").length} in discussion · ${withCls("cov").length} already covered${un?` · ${un} not classified yet`:""}${phaseTxt}`;
+  const rb = document.getElementById("reviewbtn");
+  rb.textContent = PHASE_BTN[S.phase] || "Review";
+  rb.disabled = S.phase==="done";
+}
+function rerender(){ renderStats(); renderGroups(); renderStories(); renderFuture(); renderCovered(); renderApproval(); tally(); if(!document.getElementById("panel").hidden && !running && !RESULTS) buildPlan(); }
+
+document.getElementById("groups").addEventListener("change", ev=>{
+  const t = ev.target;
+  if (t.dataset.cls) { const f = FEEDBACK.find(x=>x.n===t.dataset.fb); if (!f || !canClassify(f)) return; setCls(f.n, t.checked ? t.dataset.cls : null); save(); rerender(); }
+  else if (t.dataset.covnote) { S.covNote[t.dataset.covnote] = t.value.trim(); save(); renderCovered(); if(!document.getElementById("panel").hidden && !running && !RESULTS) buildPlan(); }
+});
+
+/* ---------- Linear ---------- */
+const ERR = {
+  needs_reauth:"Linear or Slack needs reconnecting. Reconnect it in claude.ai Settings → Connectors, then try again.",
+  server_not_connected:"Linear or Slack isn't connected for you here. Add it in claude.ai Settings → Connectors.",
+  selection_required:"More than one connector with that name is set up. Choose one when prompted, then try again.",
+  not_in_manifest:"Access was declined for this page. Allow it from the artifact's Permissions menu.",
+  blocked_by_policy:"Your organization's policy blocks this action.",
+  approval_required:"The change wasn't approved. Try again and allow it when asked.",
+  not_granted:"This view can't reach Linear or Slack.", capability_disabled:"This view can't reach Linear or Slack.",
+};
+const STOP = new Set(["needs_reauth","server_not_connected","selection_required","not_in_manifest","blocked_by_policy","not_granted","capability_disabled","capability_removed"]);
+const errText = err => { const c = err && err.code; return ERR[c] || (c==="tool_error" ? `Refused: ${err.message||"no detail given"}` : "No confirmation came back. Check the ticket or channel before trying again."); };
+const getMcp = async () => { if (MCP) return MCP; try { MCP = await window.claude?.use?.("mcp"); } catch(e) { MCP = null; } return MCP; };
+const call = (tool, input) => MCP.callTool("Linear", tool, input, {cache:false}).then(r=>r.payload);
+const futMsg = t => { const n = document.getElementById("futmsg"); n.textContent = t; n.hidden = !t; };
+const idFrom = r => { if (r && typeof r === "object") return {id:r.id || r.identifier, url:r.url}; const m = /\b([A-Z]+-\d+)\b/.exec(String(r||"")); return m ? {id:m[1]} : null; };
+
+function sectionNext(d, heading){
+  const start = d.indexOf("## "+heading); if (start < 0) return undefined;
+  const nxt = d.indexOf("\n## ", start + 3); if (nxt < 0) return null;
+  const eol = d.indexOf("\n", nxt + 1);
+  return d.slice(nxt + 1, eol < 0 ? d.length : eol).trim();
+}
+function buildPatch(d, edits){
+  const ops = [], res = {}, acAdds = [], oqAdds = [], ctx = [];
+  const once = s => d.split(s).length === 2;
+  for (const e of edits){
+    if (e.op==="ac_change"){
+      if (d.includes(e.txt)) res[e.id]="present"; else if (!once(e.old)) res[e.id]="nomatch";
+      else { ops.push({op:"replace", old_string:e.old, new_string:e.txt}); res[e.id]="ok"; }
+    } else if (e.op==="oq_resolve"){
+      if (d.includes(e.txt)) res[e.id]="present"; else if (!once(e.old)) res[e.id]="nomatch";
+      else { ops.push({op:"replace", old_string:e.old, new_string:`~~${e.old}~~ **Resolved (${SES.dateLabel} ${SN}):** ${e.txt}`}); res[e.id]="ok"; }
+    } else {
+      if (d.includes(e.txt)) { res[e.id]="present"; continue; }
+      (e.op==="ac_add"?acAdds:e.op==="oq_add"?oqAdds:ctx).push(e); res[e.id]="ok";
+    }
+  }
+  const bullets = list => list.map(e=>`\n* ${e.txt}`).join("");
+  if (acAdds.length){
+    const nx = sectionNext(d, H_AC);
+    if (nx === undefined) acAdds.forEach(e=>res[e.id]="nomatch");
+    else if (nx) ops.push({op:"insert_before", anchor:"\n\n"+nx, text:bullets(acAdds)});
+    else ops.push({op:"append", text:bullets(acAdds)});
+  }
+  if (oqAdds.length){
+    const nx = sectionNext(d, H_OQ);
+    if (nx) ops.push({op:"insert_before", anchor:"\n\n"+nx, text:bullets(oqAdds)});
+    else if (nx === null) ops.push({op:"append", text:bullets(oqAdds)});
+    else { const after = sectionNext(d, H_AC); if (after) ops.push({op:"insert_before", anchor:"\n\n"+after, text:`\n\n## ${H_OQ}\n`+bullets(oqAdds)}); else ops.push({op:"append", text:`\n\n## ${H_OQ}\n`+bullets(oqAdds)}); }
+  }
+  if (ctx.length) ops.push({op:"append", text: d.includes(CTX_HEAD) ? bullets(ctx) : `\n\n${CTX_HEAD}\n${bullets(ctx)}`});
+  return {ops, res};
+}
+
+/* ---------- future enhancements: one ticket per piece of feedback ---------- */
+function futureBody(f){
+  const es = editsFor(f.n), dec = [...new Set(es.flatMap(e=>e.dec||[]))].map(d=>{const x=DECISIONS.find(y=>y.id===d); return x ? `${d}: ${x.title} ${x.rec}` : d;});
+  const lines = es.map(e=> e.op==="new_story" ? `- New user story: ${e.title}` : `- ${e.us} (${STORIES[e.us].ticket}), ${KIND[e.op].toLowerCase()}: ${e.txt}`);
+  return [`**Future enhancement** from the ${SHORT} on ${SES.dateLabel}. Not part of the current project.`, "",
+    `**Feedback:** ${f.label} (${f.who})`, `**What it would change for users:** ${f.summary}`, `**What was said:** ${f.t}`, "",
+    "**Story updates proposed at the time**", ...lines,
+    dec.length ? `\n**Related decisions:** ${dec.join(" ")}` : null, "", `[Meeting note](${MEET})`, "", `Ref: ${REF(f.n)}`].filter(x=>x!==null).join("\n");
+}
+async function logFuture(list){
+  futMsg(""); let n = 0;
+  for (const f of list){
+    if (S.logged[f.n]) continue;
+    try {
+      const rel = [...new Set(editsFor(f.n).filter(e=>e.us).map(e=>STORIES[e.us].ticket))];
+      const r = await call("save_issue", {team:TEAM, project:PROJECT, milestone:FUT_MS.id, state:(SES.backlogState||"Backlog"), title:`[Future] ${f.label}`, description:futureBody(f), relatedTo:rel, links:[{url:MEET, title:`Meeting note, ${SES.dateLabel}`}]});
+      const got = idFrom(r);
+      if (!got || !got.id) throw {code:"upstream_error"};
+      S.logged[f.n] = {id:got.id, url:got.url || LIN(got.id), at:new Date().toISOString()}; n++; save();
+    } catch(err){ futMsg(`${f.label}: ${errText(err)}`); if (STOP.has(err && err.code)) break; }
+  }
+  rerender();
+  return n;
+}
+async function restore(n){
+  const lg = S.logged[n]; if (!lg || S.phase!=="draft" || !(await getMcp())) return;
+  futMsg("");
+  try {
+    await call("save_issue", {id:lg.id, state:"Canceled"});
+    await call("save_comment", {issueId:lg.id, body:`Taken back out of future enhancements from the feedback review on ${new Date().toLocaleDateString()}.`});
+    delete S.logged[n]; setCls(n, null); save();
+  } catch(err){ futMsg(errText(err)); }
+  rerender();
+}
+document.addEventListener("click", ev=>{ const b = ev.target.closest("button"); if (b && b.dataset.restore) restore(b.dataset.restore); });
+
+/* ---------- Slack text ---------- */
+const lnk = id => `[${id}](${LIN(id)})`;
+const mention = a => `<@${a.slackId}>`;
+const by = f => f.by || f.who;
+function storiesOf(f){
+  const es = editsFor(f.n), out = [];
+  [...new Set(es.filter(e=>e.us).map(e=>e.us))].forEach(us=>out.push(`${lnk(STORIES[us].ticket)} ${us} ${STORIES[us].title}`));
+  es.filter(e=>e.op==="new_story").forEach(e=>out.push(S.created[e.id] ? `${lnk(S.created[e.id])} ${e.title} (new story)` : `new story: ${e.title}`));
+  return out;
+}
+const shortStories = f => { const es = editsFor(f.n); const ids = [...new Set(es.filter(e=>e.us).map(e=>lnk(STORIES[e.us].ticket)))]; es.filter(e=>e.op==="new_story").forEach(e=>ids.push(S.created[e.id] ? `${lnk(S.created[e.id])} (new story)` : "(new story)")); return ids.join(", "); };
+const futLink = f => S.logged[f.n] ? ` ${lnk(S.logged[f.n].id)}` : "";
+function draftTexts(){
+  const nw = withCls("new"), fu = withCls("fut"), cv = withCls("cov"), ds = withCls("disc");
+  const counts = [plural(nw.length,"new requirement","new requirements")];
+  if (fu.length) counts.push(plural(fu.length,"future enhancement","future enhancements"));
+  if (ds.length) counts.push(`${ds.length} still in discussion`);
+  if (cv.length) counts.push(`${cv.length} already covered by what we're building`);
+  const main = `**${SHORT}, ${SES.dateLabel}:** we've gone through the feedback. ${listJoin(counts)}. Only the new requirements need your approval; the user stories in Linear change once you approve. Details in the thread.`;
+  const sum = [];
+  sum.push(`**New requirements** (need approval)\n${nw.length ? nw.map(f=>`• **${f.label}** (${by(f)}): ${f.summary} ${shortStories(f)}`).join("\n") : "None this week."}`);
+  if (fu.length) sum.push(`**Future enhancements** (logged in the ${FUT_MS.name} milestone, no action needed)\n${fu.map(f=>`• **${f.label}** (${by(f)}): ${f.summary}${futLink(f)}`).join("\n")}`);
+  if (ds.length) sum.push(`**Still needs discussion** (we're still working through the requirements, no action yet)\n${ds.map(f=>`• **${f.label}** (${by(f)}): ${f.summary}`).join("\n")}`);
+  if (cv.length) sum.push(`**Already covered by what we're building** (no change)\n${cv.map(f=>`• **${f.label}** (${by(f)})${S.covNote[f.n]?`: covered by ${S.covNote[f.n]}`:""}`).join("\n")}`);
+  sum.push(`[Meeting note in Granola](${MEET})`);
+  const ask = [`${APPROVERS.map(mention).join(" ")} please review the new requirements below before they go into the user stories. Reply in this thread to approve, or name any you want moved to future enhancements. The future enhancements, items still in discussion and already-covered items need no action.`];
+  ask.push(nw.map((f,i)=>`${i+1}. **${f.label}**: ${f.summary}\n   Stories: ${storiesOf(f).join("; ")}`).join("\n") || "No new requirements this week.");
+  return {main, thread: sum.join("\n\n"), approval: ask.join("\n\n")};
+}
+function finalText(){
+  const nw = withCls("new"), sent = sentSet();
+  const disc = FEEDBACK.filter(f=>sent.has(f.n) && cls(f.n)==="disc");
+  const moved = FEEDBACK.filter(f=>sent.has(f.n) && cls(f.n)==="fut"), cov = FEEDBACK.filter(f=>sent.has(f.n) && cls(f.n)==="cov");
+  const tickets = [...new Set(EDITS.filter(e=>inScope(e) && e.op!=="new_story").map(ticketOf).filter(Boolean))];
+  const created = EDITS.filter(e=>e.op==="new_story" && inScope(e) && S.created[e.id]).map(e=>S.created[e.id]);
+  return `Approved and applied. ${plural(nw.length,"new requirement is","new requirements are")} now in Linear.${tickets.length?` Updated stories: ${tickets.map(lnk).join(", ")}.`:""}${created.length?` New stor${created.length===1?"y":"ies"}: ${created.map(lnk).join(", ")}.`:""}${moved.length?`\nMoved to future enhancements after review: ${moved.map(f=>`${f.label}${futLink(f)}`).join(", ")}.`:""}${disc.length?`\nMoved back to discussion after review: ${disc.map(f=>f.label).join(", ")}.`:""}${cov.length?`\nAlready covered by what we're building, no change: ${cov.map(f=>f.label).join(", ")}.`:""}`;
+}
+let edited = {};
+const TXT_IDS = ["slackmain","slackthread","slackapproval","slackfinal"];
+TXT_IDS.forEach(id=>document.getElementById(id).addEventListener("input", ()=>edited[id] = true));
+function fillTexts(force){
+  const d = draftTexts(), vals = {slackmain:d.main, slackthread:d.thread, slackapproval:d.approval, slackfinal:finalText()};
+  TXT_IDS.forEach(id=>{ if (force || !edited[id]) document.getElementById(id).value = vals[id]; });
+}
+const payloadText = r => { const p = r && (r.payload ?? r.content?.[0]?.text); return typeof p === "string" ? p : JSON.stringify(p || ""); };
+function tsFrom(r){
+  const p = r && r.payload;
+  if (p && typeof p === "object") {
+    for (const k of ["ts","message_ts"]) if (typeof p[k] === "string") return p[k];
+    if (p.message && typeof p.message.ts === "string") return p.message.ts;
+    if (p.message_context && typeof p.message_context.message_ts === "string") return p.message_context.message_ts;
+  }
+  const txt = payloadText(r);
+  let m = /Message TS:\s*(\d{9,11}\.\d{6})/.exec(txt); if (m) return m[1];
+  m = /"message_ts"\s*:\s*"(\d{9,11}\.\d{6})"/.exec(txt); if (m) return m[1];
+  m = /\/p(\d{10})(\d{6})/.exec(txt); if (m) return `${m[1]}.${m[2]}`;
+  m = /"?(?:message_)?ts"?\s*[:=]\s*"?(\d{10}\.\d{6})/.exec(txt); return m ? m[1] : null;
+}
+const linkFrom = r => { const m = /https:\\?\/\\?\/[a-z0-9-]+\.slack\.com\\?\/archives\\?\/[A-Z0-9]+\\?\/p\d+/i.exec(payloadText(r)); return m ? m[0].replace(/\\\//g,"/") : null; };
+const slack = (tool, input) => MCP.callTool("Slack", tool, input, {cache:false});
+async function recoverTs(marker, parentTs){
+  try {
+    const r = parentTs ? await slack("slack_read_thread", {channel_id:CHANNEL, message_ts:parentTs, limit:200}) : await slack("slack_read_channel", {channel_id:CHANNEL, limit:10});
+    const blocks = payloadText(r).split(/===|---/);
+    for (const b of (parentTs ? blocks.reverse() : blocks)) if (b.includes(marker)) { const m = /Message TS:\s*(\d+\.\d+)/.exec(b); if (m) return m[1]; }
+  } catch(e) {}
+  return null;
+}
+
+/* ---------- dev approval ---------- */
+let REPLIES = null;
+function renderApproval(){
+  const sec = document.getElementById("approvalsec");
+  sec.hidden = S.phase==="draft";
+  if (sec.hidden) return;
+  const sl = S.slack || {};
+  document.getElementById("apptitle").textContent = S.phase==="done" ? "Approved and applied" : "Waiting on dev approval";
+  document.getElementById("appnote").textContent = S.phase==="done" ? `Applied to Linear on ${fmtDate(S.approvedAt)}.` : `Sent for approval on ${fmtDate(sl.at)}. ${plural((S.sent||[]).length,"new requirement is","new requirements are")} waiting. If a dev holds one back, switch its card to Future enhancement, Still needs discussion or Already covered in app before you apply.`;
+  const tl = document.getElementById("threadlink"); tl.hidden = !sl.link; if (sl.link) tl.href = sl.link;
+  document.getElementById("approvers").innerHTML = APPROVERS.map(a=>{
+    const reps = REPLIES ? (REPLIES[a.slackId] || []) : null;
+    const st = reps === null ? '<span class="pill lin">Not checked</span>' : reps.length ? '<span class="pill done">Replied</span>' : '<span class="pill fly">No reply yet</span>';
+    return `<div class="appr"><div class="apprhead"><b>${esc(a.name)}</b>${st}</div>${(reps||[]).map(r=>`<p class="rep">${esc(r.text)}<span class="src"> ${esc(r.at)}</span></p>`).join("")}</div>`;
+  }).join("");
+  document.getElementById("checkbtn").hidden = S.phase!=="awaiting" || !sl.ts;
+}
+async function checkThread(){
+  const w = document.getElementById("appwarn"); w.hidden = true;
+  const sl = S.slack || {};
+  if (!sl.ts || !(await getMcp())) { w.textContent = "The thread can't be read from this view."; w.hidden = false; return; }
+  const btn = document.getElementById("checkbtn"); btn.disabled = true; btn.textContent = "Checking…";
+  try {
+    const txt = payloadText(await slack("slack_read_thread", {channel_id:CHANNEL, message_ts:sl.ts, limit:500}));
+    const after = parseFloat(sl.approvalTs || sl.ts), out = {};
+    txt.split(/--- Reply \d+ of \d+ ---/).slice(1).forEach(b=>{
+      const uid = (/From:[^\n]*\((U[A-Z0-9]+)\)/.exec(b)||[])[1];
+      const ts = parseFloat((/Message TS:\s*(\d+\.\d+)/.exec(b)||[])[1] || "0");
+      const at = ((/Time:\s*([^\n]+)/.exec(b)||[])[1] || "").trim();
+      if (!uid || ts <= after) return;
+      const text = ((b.split(/Message TS:[^\n]*\n/)[1] || "").split(/\nReactions:/)[0]).trim();
+      (out[uid] = out[uid] || []).push({text, at});
+    });
+    REPLIES = out;
+  } catch(err){ w.textContent = errText(err); w.hidden = false; }
+  btn.disabled = false; btn.textContent = "Check the Slack thread";
+  renderApproval();
+}
+document.getElementById("checkbtn").addEventListener("click", checkThread);
+
+/* ---------- panel ---------- */
+function byTicket(){ const m = new Map(); toApply().forEach(e=>{ const k = storyKey(e); if(!m.has(k)) m.set(k, []); m.get(k).push(e); }); return m; }
+const showFields = ids => ["f-main","f-thread","f-approval","f-final","f-confirm"].forEach(id=>document.getElementById(id).hidden = !ids.includes(id));
+function buildPlan(){
+  const un = unclassified(), lg = toLog(), rows = [];
+  if (S.phase==="draft"){
+    document.getElementById("panelh").textContent = "Send for dev approval";
+    document.getElementById("panelnote").textContent = un.length ? `Classify ${un.length===1?"this piece":`these ${un.length} pieces`} of feedback first: ${un.map(f=>f.label).join(", ")}.` : `${plural(withCls("new").length,"new requirement goes","new requirements go")} to the devs for approval. Nothing changes in the user stories yet.${lg.length?` ${plural(lg.length,"future enhancement gets","future enhancements get")} logged in the ${FUT_MS.name} milestone now.`:""}${withCls("disc").length?` ${withCls("disc").length} still in discussion and`:""}${withCls("cov").length||withCls("disc").length?` ${withCls("cov").length} already covered: nothing in Linear, listed in the summary.`:""}`;
+    if (lg.length) rows.push(["LOG","Linear",`Log ${plural(lg.length,"future enhancement","future enhancements")} in ${FUT_MS.name}`]);
+    rows.push(["MAIN","Slack",`Post to #${SES.slackChannelName||"project channel"}`]);
+    rows.push(["THREAD","Thread","Summary: new requirements, future enhancements, already covered"]);
+    rows.push(["ASK","Thread",`Approval request tagging ${APPROVERS.map(x=>x.name.split(" ")[0]).join(", ")}`]);
+    showFields(["f-main","f-thread","f-approval"]);
+    document.getElementById("applybtn").textContent = "Send for approval";
+    document.getElementById("applybtn").disabled = running || !!un.length;
+  } else if (S.phase==="awaiting"){
+    const m = byTicket();
+    document.getElementById("panelh").textContent = "Apply approved updates to Linear";
+    document.getElementById("panelnote").textContent = un.length ? `Classify ${un.map(f=>f.label).join(", ")} first.` : `${plural(m.size,"story gets","stories get")} updated from ${plural(withCls("new").length,"new requirement","new requirements")}. Each existing story is read fresh from Linear, updated, then gets one comment.${lg.length?` ${plural(lg.length,"piece of feedback moved","pieces of feedback moved")} to future enhancements get${lg.length===1?"s":""} logged.`:""}`;
+    [...m.entries()].forEach(([k,es])=>{ const e0 = es[0]; rows.push([k, e0.op==="new_story" ? "New story" : STORIES[e0.us].ticket, e0.op==="new_story" ? `Create "${e0.title}" in ${NEW_MS.name}` : `${e0.us} · ${es.map(e=>KIND[e.op].replace(" acceptance criterion"," AC")).join(", ")}`]); });
+    if (lg.length) rows.push(["LOG","Linear",`Log ${plural(lg.length,"future enhancement","future enhancements")}`]);
+    rows.push(["FINAL","Thread","Reply: approved and applied"]);
+    showFields(["f-final","f-confirm"]);
+    document.getElementById("applybtn").textContent = "Apply to Linear";
+    document.getElementById("applybtn").disabled = running || !!un.length || !document.getElementById("approvedchk").checked;
+  }
+  document.getElementById("plan").innerHTML = rows.map(([k,label,msg])=>`<div class="pr"><span class="mono">${esc(label)}</span><span class="msg">${esc(msg)}</span><span class="pill lin" data-status="${esc(k)}">Ready</span></div>`).join("");
+  fillTexts(false);
+}
+function setRow(key, label, c, msg){
+  const p = document.querySelector(`[data-status="${CSS.escape(key)}"]`); if(!p) return;
+  p.className = "pill " + c; p.textContent = label;
+  if (msg) p.parentElement.querySelector(".msg").textContent = msg;
+}
+const panelMsg = (warn, ok) => { const w = document.getElementById("panelwarn"), o = document.getElementById("panelok"); w.hidden = !warn; w.textContent = warn || ""; o.hidden = !ok; o.innerHTML = ok || ""; };
+
+async function sendForApproval(){
+  panelMsg();
+  if (unclassified().length) { panelMsg("Classify every piece of feedback first."); return; }
+  if (!(await getMcp())) { panelMsg("Linear and Slack can't be reached from this view. Open the page in Claude while signed in."); return; }
+  running = true; RESULTS = true; ["applybtn","cancelbtn"].forEach(id=>document.getElementById(id).disabled = true);
+  const lg = toLog();
+  if (lg.length){
+    setRow("LOG","Logging","fly");
+    const n = await logFuture(lg), left = toLog().length;
+    setRow("LOG", left ? (n ? "Partly done" : "Failed") : "Done", left ? (n ? "fly" : "cut") : "done", left ? `${n} logged. ${document.getElementById("futmsg").textContent}` : `${plural(n,"ticket","tickets")} logged`);
+    if (left && !n) { running = false; document.getElementById("cancelbtn").disabled = false; panelMsg("Logging failed, so nothing was posted. Fix the Linear issue and try again."); return; }
+  }
+  fillTexts(false);
+  try {
+    setRow("MAIN","Posting","fly");
+    const top = await slack("slack_send_message", {channel_id:CHANNEL, message:document.getElementById("slackmain").value.trim()});
+    const ts = tsFrom(top) || await recoverTs(`${SHORT}, ${SES.dateLabel}`), link = linkFrom(top);
+    S.phase = "awaiting"; S.sent = withCls("new").map(f=>f.n); S.slack = {ts, link, at:new Date().toISOString()}; save();
+    setRow("MAIN","Done","done");
+    if (!ts) { ["THREAD","ASK"].forEach(k=>setRow(k,"Not posted","cut","The channel post went out but its thread couldn't be found. Copy this text into the thread by hand.")); panelMsg("Post the summary and approval request in the thread by hand, using the text above."); }
+    else {
+      setRow("THREAD","Posting","fly");
+      await slack("slack_send_message", {channel_id:CHANNEL, thread_ts:ts, message:document.getElementById("slackthread").value.trim()});
+      setRow("THREAD","Done","done");
+      setRow("ASK","Posting","fly");
+      const ask = await slack("slack_send_message", {channel_id:CHANNEL, thread_ts:ts, message:document.getElementById("slackapproval").value.trim()});
+      S.slack.approvalTs = tsFrom(ask) || await recoverTs("please review the new requirements", ts) || ts; save();
+      setRow("ASK","Done","done");
+      panelMsg(null, `Sent. Come back here once the devs reply, then press <b>Apply to Linear</b>.${link?` <a href="${esc(link)}" target="_blank" rel="noopener">Open the post in Slack</a>`:""}`);
+    }
+  } catch(err){
+    const k = S.phase==="awaiting" ? (S.slack && S.slack.approvalTs ? "ASK" : "THREAD") : "MAIN";
+    setRow(k,"Failed","cut", errText(err));
+    panelMsg(S.phase==="awaiting" ? "The channel post went out but a thread reply failed. Post the rest of the text in the thread by hand." : `Nothing was posted to Slack. ${errText(err)}`);
+  }
+  running = false; document.getElementById("cancelbtn").disabled = false; document.getElementById("applybtn").disabled = true;
+  rerender();
+}
+
+async function applyApproved(){
+  panelMsg();
+  if (unclassified().length) { panelMsg("Classify every piece of feedback first."); return; }
+  if (!(await getMcp())) { panelMsg("Linear and Slack can't be reached from this view. Open the page in Claude while signed in."); return; }
+  running = true; RESULTS = true; ["applybtn","cancelbtn"].forEach(id=>document.getElementById(id).disabled = true);
+  const userFinal = edited.slackfinal ? document.getElementById("slackfinal").value.trim() : null;
+  let stopped = false, failures = 0;
+  for (const [k, es] of byTicket()){
+    if (stopped) { setRow(k,"Not run","lin"); continue; }
+    const fbs = [...new Set(es.flatMap(e=>e.fb))].filter(n=>cls(n)==="new").map(n=>FEEDBACK.find(x=>x.n===n).label);
+    const note = `**Updated from the ${SHORT}, ${SES.dateLabel}** (approved by ${APPROVERS.map(a=>a.name.split(" ")[0]).join(", ")} in Slack; applied by ${SES.ownerName || "the review owner"})\nFeedback: ${fbs.join(", ")}`;
+    try {
+      if (es[0].op==="new_story"){
+        const e = es[0];
+        setRow(k,"Creating","fly");
+        const r = await call("save_issue", {team:TEAM, project:PROJECT, milestone:NEW_MS.id, state:(SES.backlogState||"Backlog"), title:e.title, description:e.txt, relatedTo:(e.rel?[e.rel]:[]), links:[{url:MEET, title:`Meeting note, ${SES.dateLabel}`}]});
+        const got = idFrom(r); if (!got || !got.id) throw {code:"upstream_error"};
+        S.created[e.id] = got.id; S.applied[e.id] = new Date().toISOString(); save();
+        await call("save_comment", {issueId:got.id, body:`${note}\n\nCreated as a new user story.${S.slack&&S.slack.link?`\n\n[Slack thread](${S.slack.link})`:""}`});
+        setRow(k,"Done","done",`Created ${got.id}`);
+        continue;
+      }
+      const tk = STORIES[k].ticket;
+      setRow(k,"Reading","up");
+      const issue = (await call("get_issue", {id:tk, fields:["description"]})) || {};
+      const {ops, res} = buildPatch(typeof issue.description==="string" ? issue.description : "", es);
+      setRow(k,"Writing","fly");
+      if (ops.length) await call("save_issue", {id:tk, patch:ops});
+      const done = es.filter(e=>res[e.id]!=="nomatch"), missed = es.filter(e=>res[e.id]==="nomatch");
+      if (done.length) await call("save_comment", {issueId:tk, body:`${note}\n\n${done.map(e=>`- ${KIND[e.op]}: ${e.txt}`).join("\n")}${S.slack&&S.slack.link?`\n\n[Slack thread](${S.slack.link})`:""}`});
+      done.forEach(e=>{ S.applied[e.id] = new Date().toISOString(); }); save();
+      if (missed.length) { failures++; setRow(k,"Partly done","fly", `${done.length} applied. ${missed.length} skipped because the wording in Linear has changed.`); }
+      else setRow(k,"Done","done", `${plural(done.length,"update","updates")} applied`);
+    } catch(err){
+      failures++; setRow(k,"Failed","cut", errText(err));
+      if (STOP.has(err && err.code)) { stopped = true; panelMsg(errText(err)); }
+    }
+  }
+  const lg = toLog();
+  if (lg.length && !stopped){
+    setRow("LOG","Logging","fly");
+    const n = await logFuture(lg), left = toLog().length; if (left) failures++;
+    setRow("LOG", left ? (n ? "Partly done" : "Failed") : "Done", left ? (n ? "fly" : "cut") : "done", `${plural(n,"ticket","tickets")} logged`);
+  }
+  const finalTxt = userFinal || finalText();
+  document.getElementById("slackfinal").value = finalTxt;
+  const open = toApply().length;
+  if (!stopped && open) setRow("FINAL","Not posted","fly",`${plural(open,"update","updates")} didn't apply. Retry, then the thread reply goes out.`);
+  else if (!stopped && S.slack && S.slack.ts){
+    setRow("FINAL","Posting","fly");
+    try { await slack("slack_send_message", {channel_id:CHANNEL, thread_ts:S.slack.ts, message:finalTxt}); setRow("FINAL","Done","done"); }
+    catch(err){ failures++; setRow("FINAL","Failed","cut", errText(err)); }
+  } else if (!stopped) setRow("FINAL","Not posted","cut","No thread to reply to. Post the text above in Slack by hand.");
+  if (!stopped && !open && !toLog().length) { S.phase = "done"; S.approvedAt = new Date().toISOString(); save(); }
+  running = false; document.getElementById("cancelbtn").disabled = false; document.getElementById("applybtn").disabled = true;
+  rerender();
+  if (!failures && !stopped) panelMsg(null, `All done.${S.slack&&S.slack.link?` <a href="${esc(S.slack.link)}" target="_blank" rel="noopener">Open the Slack thread</a>`:""}`);
+}
+
+document.getElementById("approvedchk").addEventListener("change", ()=>{ if(!running && !RESULTS) buildPlan(); });
+document.getElementById("reviewbtn").addEventListener("click", ()=>{ RESULTS=false; edited = {}; document.getElementById("approvedchk").checked = false; panelMsg(); document.getElementById("panel").hidden=false; buildPlan(); });
+document.getElementById("cancelbtn").addEventListener("click", ()=>{ document.getElementById("panel").hidden=true; panelMsg(); });
+document.getElementById("applybtn").addEventListener("click", ()=>{ if (S.phase==="draft") sendForApproval(); else if (S.phase==="awaiting") applyApproved(); });
+document.getElementById("copybtn").addEventListener("click", ()=>{
+  const g = c => withCls(c).map(f=>`- ${f.label}: ${f.summary}${c==="cov"&&S.covNote[f.n]?` (covered by ${S.covNote[f.n]})`:""}`).join("\n") || "- None";
+  const text = `${SHORT} ${SES.dateLabel}\n\nNew requirements\n${g("new")}\n\nFuture enhancements\n${g("fut")}\n\nStill needs discussion\n${g("disc")}\n\nAlready covered\n${g("cov")}${unclassified().length?`\n\nNot classified yet\n${unclassified().map(f=>`- ${f.label}`).join("\n")}`:""}`;
+  const out = document.getElementById("copyout"), btn = document.getElementById("copybtn");
+  out.value = text;
+  const fallback = () => { out.hidden = false; out.select(); btn.textContent = "Select and copy below"; };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(()=>{ btn.textContent="Copied"; out.hidden=true; setTimeout(()=>btn.textContent="Copy list",2000); }).catch(fallback);
+  else fallback();
+});
+
+/* ---------- boot ---------- */
+renderStatic(); rerender();
+setTimeout(async()=>{
+  try { DB = await window.claude?.use?.("db"); } catch(e) { DB = null; }
+  if (DB) {
+    DB.doc("review/state").onSnapshot(snap=>{
+      if (running) return;
+      if (!snap.exists) { save(); return; }
+      const j = JSON.stringify(snap.data());
+      if (j === lastSaved) return;
+      S = Object.assign(BLANK(), JSON.parse(j));
+      try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {}
+      rerender();
+    }, ()=>{});
+  }
+}, 0);
+</script>

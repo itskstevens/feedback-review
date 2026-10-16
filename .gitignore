@@ -1,0 +1,8 @@
+node_modules/
+config.yaml
+*.local.yaml
+review-data*.json
+review-page*.html
+!examples/sample-data.json
+.DS_Store
+__pycache__/

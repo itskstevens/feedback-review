@@ -1,0 +1,55 @@
+# feedback-review settings. The setup skill writes this for you; you rarely edit it by hand.
+# Keep your filled-in copy in your Claude project (or a private folder), never in this repo.
+
+owner:
+  name: Sam Rivera                 # used in Linear comments: "applied by <name>"
+  slack_user_id: U00000OWNER       # where the "your review page is ready" DM goes
+
+program:
+  name: Northwind Onboarding       # shown on the page header
+  short_name: Northwind            # used in Slack: "Northwind focus group, 15 Jan"
+  session_name: focus group        # what you call the meeting, lower case
+
+meetings:
+  source: granola
+  granola_folder_id: 00000000-0000-0000-0000-000000000000   # optional but recommended
+  title_includes: ["focus group"]  # a meeting matches if its title contains one of these...
+  content_signals:                 # ...or its summary shows these (demo plus user feedback)
+    - demo of the app to users
+    - users giving feedback on what they saw
+  exclude_titles: ["stand-up", "standup", "sync", "1:1"]
+  timezone: America/New_York
+
+tracker:
+  type: linear                     # MVP supports linear only; see ROADMAP.md
+  workspace_slug: northwind-example  # from your Linear URLs: linear.app/<slug>/issue/...
+  team: NW
+  project: Onboarding Tracker
+  story_title_prefix: "US-"        # user stories are issues whose titles start with this
+  current_milestone: MVP Build     # shown on the page for context
+  future_milestone:                # setup creates this if it doesn't exist
+    name: Future Enhancements
+    id: ""
+  new_story_milestone:             # where brand-new stories go
+    name: Iteration 2
+    id: ""
+  backlog_state: Backlog
+
+stories:
+  # Headings your user stories use. The page adds criteria and questions under these.
+  acceptance_heading: Acceptance criteria
+  questions_heading: Open questions
+
+chat:
+  type: slack                      # MVP supports slack only
+  channel_id: C00000EXAMPLE
+  channel_name: onboarding-tracker
+  approvers:                       # devs tagged on the approval request
+    - name: Alex Chen
+      slack_id: U00000AAA01
+    - name: Jordan Patel
+      slack_id: U00000BBB02
+
+schedule:
+  weekday: Thursday
+  local_time: "16:00"              # after the session ends
