@@ -65,16 +65,16 @@ Then ask Claude to "set up the feedback review".
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/flow-dark.png">
-    <img src="docs/flow-light.png" alt="Flow: Claude reads the Granola session, maps feedback to Linear stories and publishes a review page. You classify feedback and send for approval. Devs approve in Slack. Applying patches the stories; future enhancements become tickets in their own milestone." width="900">
+    <img src="docs/flow-light.png" alt="Flow: Claude drafts the review from the Granola session and your Linear stories. You classify each piece of feedback and send. Devs approve new requirements in Slack, then Linear updates; future enhancements become tickets in their own milestone." width="900">
   </picture>
 </p>
 
 <p align="center"><sub>Drawn with <a href="https://github.com/tt-a1i/archify">Archify</a>. Download <a href="docs/flow.html">docs/flow.html</a> for the interactive version.</sub></p>
 
-1. **After the session**, the scheduled run reads the Granola note and transcript, pulls out each piece of feedback, and maps it to the stories it would change. It publishes a private review page and DMs you the link.
-2. **You decide.** One box per piece of feedback. You can't send until everything is classified.
-3. **Send for approval.** Future enhancements get logged in Linear. The project channel gets one post listing every group, and your devs are asked to approve only the new requirements.
-4. **Apply.** Once they approve, one button patches the stories in Linear, comments on each one, creates any new stories, and replies in the thread.
+1. **Claude drafts the review for you.** After the session, the scheduled run reads the Granola note and transcript, pulls out each piece of feedback, and drafts the story edits each one would need. You get a DM with a link to a private review page.
+2. **You make one call per piece of feedback, not per story edit.** Tick one of the four boxes on each card. The page won't send until every card has one.
+3. **Devs only review what's new.** Sending logs future enhancements in Linear and posts one Slack thread listing every group. Your devs are asked to approve the new requirements and nothing else.
+4. **Linear updates in one click after approval.** The page patches each approved story, leaves a comment saying what changed and who approved it, creates any new stories, and replies in the thread.
 
 ## 🗳 The four boxes
 

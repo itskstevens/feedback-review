@@ -23,20 +23,20 @@
  "phases": [
   {
    "id": "prep",
-   "label": "After the session",
+   "label": "Claude drafts the review",
    "fromCol": 0,
    "toCol": 1
   },
   {
    "id": "decide",
-   "label": "You decide",
+   "label": "You classify + send",
    "fromCol": 2,
    "toCol": 3,
    "variant": "emphasis"
   },
   {
    "id": "ship",
-   "label": "Approve + apply",
+   "label": "Devs approve, Linear updates",
    "fromCol": 4,
    "toCol": 5,
    "variant": "dashed"
@@ -59,8 +59,8 @@
    "col": 0,
    "type": "external",
    "label": "Read session",
-   "sublabel": "Granola note + transcript",
-   "width": 150
+   "sublabel": "extracts each feedback item",
+   "width": 160
   },
   {
    "id": "map",
@@ -68,8 +68,8 @@
    "col": 1,
    "type": "backend",
    "label": "Map feedback",
-   "sublabel": "to the stories it changes",
-   "width": 150
+   "sublabel": "drafts the story edits",
+   "width": 160
   },
   {
    "id": "page",
@@ -77,8 +77,8 @@
    "col": 2,
    "type": "frontend",
    "label": "Review page",
-   "sublabel": "private, link sent by DM",
-   "width": 150
+   "sublabel": "one card per item, via DM",
+   "width": 160
   },
   {
    "id": "classify",
@@ -86,9 +86,8 @@
    "col": 2,
    "type": "frontend",
    "label": "Classify feedback",
-   "sublabel": "one box per card",
-   "tag": "4 choices",
-   "width": 150
+   "sublabel": "new/future/discuss/covered",
+   "width": 160
   },
   {
    "id": "send",
@@ -96,8 +95,8 @@
    "col": 3,
    "type": "frontend",
    "label": "Send for approval",
-   "sublabel": "one button",
-   "width": 150
+   "sublabel": "logs futures, posts thread",
+   "width": 160
   },
   {
    "id": "apply",
@@ -105,8 +104,8 @@
    "col": 5,
    "type": "frontend",
    "label": "Apply to Linear",
-   "sublabel": "one button",
-   "width": 150
+   "sublabel": "patches stories, replies",
+   "width": 160
   },
   {
    "id": "thread",
@@ -114,8 +113,8 @@
    "col": 4,
    "type": "messagebus",
    "label": "Devs approve",
-   "sublabel": "in a Slack thread",
-   "width": 150
+   "sublabel": "sign off new requirements",
+   "width": 160
   },
   {
    "id": "stories",
@@ -123,8 +122,8 @@
    "col": 1,
    "type": "database",
    "label": "User stories",
-   "sublabel": "read, never written here",
-   "width": 150
+   "sublabel": "matched, never edited",
+   "width": 160
   },
   {
    "id": "future",
@@ -133,7 +132,7 @@
    "type": "database",
    "label": "Future Enhancements",
    "sublabel": "one ticket per item",
-   "width": 150
+   "width": 160
   },
   {
    "id": "updated",
@@ -141,8 +140,8 @@
    "col": 5,
    "type": "database",
    "label": "Stories updated",
-   "sublabel": "plus any new stories",
-   "width": 150
+   "sublabel": "criteria + comment added",
+   "width": 160
   }
  ],
  "edges": [
