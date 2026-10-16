@@ -1,0 +1,229 @@
+{
+ "schema_version": 2,
+ "diagram_type": "workflow",
+ "meta": {
+  "title": "feedback-review: one week, one session",
+  "quality_profile": "showcase",
+  "output": "docs/flow.html"
+ },
+ "lanes": [
+  {
+   "id": "claude",
+   "label": "Claude, scheduled run"
+  },
+  {
+   "id": "you",
+   "label": "You and your devs"
+  },
+  {
+   "id": "linear",
+   "label": "Linear"
+  }
+ ],
+ "phases": [
+  {
+   "id": "prep",
+   "label": "After the session",
+   "fromCol": 0,
+   "toCol": 1
+  },
+  {
+   "id": "decide",
+   "label": "You decide",
+   "fromCol": 2,
+   "toCol": 3,
+   "variant": "emphasis"
+  },
+  {
+   "id": "ship",
+   "label": "Approve + apply",
+   "fromCol": 4,
+   "toCol": 5,
+   "variant": "dashed"
+  }
+ ],
+ "mainPath": [
+  "read",
+  "map",
+  "page",
+  "classify",
+  "send",
+  "thread",
+  "apply",
+  "updated"
+ ],
+ "nodes": [
+  {
+   "id": "read",
+   "lane": "claude",
+   "col": 0,
+   "type": "external",
+   "label": "Read session",
+   "sublabel": "Granola note + transcript",
+   "width": 150
+  },
+  {
+   "id": "map",
+   "lane": "claude",
+   "col": 1,
+   "type": "backend",
+   "label": "Map feedback",
+   "sublabel": "to the stories it changes",
+   "width": 150
+  },
+  {
+   "id": "page",
+   "lane": "claude",
+   "col": 2,
+   "type": "frontend",
+   "label": "Review page",
+   "sublabel": "private, link sent by DM",
+   "width": 150
+  },
+  {
+   "id": "classify",
+   "lane": "you",
+   "col": 2,
+   "type": "frontend",
+   "label": "Classify feedback",
+   "sublabel": "one box per card",
+   "tag": "4 choices",
+   "width": 150
+  },
+  {
+   "id": "send",
+   "lane": "you",
+   "col": 3,
+   "type": "frontend",
+   "label": "Send for approval",
+   "sublabel": "one button",
+   "width": 150
+  },
+  {
+   "id": "apply",
+   "lane": "you",
+   "col": 5,
+   "type": "frontend",
+   "label": "Apply to Linear",
+   "sublabel": "one button",
+   "width": 150
+  },
+  {
+   "id": "thread",
+   "lane": "you",
+   "col": 4,
+   "type": "messagebus",
+   "label": "Devs approve",
+   "sublabel": "in a Slack thread",
+   "width": 150
+  },
+  {
+   "id": "stories",
+   "lane": "linear",
+   "col": 1,
+   "type": "database",
+   "label": "User stories",
+   "sublabel": "read, never written here",
+   "width": 150
+  },
+  {
+   "id": "future",
+   "lane": "linear",
+   "col": 3,
+   "type": "database",
+   "label": "Future Enhancements",
+   "sublabel": "one ticket per item",
+   "width": 150
+  },
+  {
+   "id": "updated",
+   "lane": "linear",
+   "col": 5,
+   "type": "database",
+   "label": "Stories updated",
+   "sublabel": "plus any new stories",
+   "width": 150
+  }
+ ],
+ "edges": [
+  {
+   "id": "read-map",
+   "from": "read",
+   "to": "map"
+  },
+  {
+   "id": "stories-map",
+   "from": "stories",
+   "to": "map",
+   "label": "read",
+   "variant": "dashed",
+   "role": "branch"
+  },
+  {
+   "id": "map-page",
+   "from": "map",
+   "to": "page"
+  },
+  {
+   "id": "page-classify",
+   "from": "page",
+   "to": "classify",
+   "label": "DM link",
+   "variant": "emphasis"
+  },
+  {
+   "id": "classify-send",
+   "from": "classify",
+   "to": "send"
+  },
+  {
+   "id": "send-thread",
+   "from": "send",
+   "to": "thread",
+   "label": "post",
+   "variant": "emphasis"
+  },
+  {
+   "id": "send-future",
+   "from": "send",
+   "to": "future",
+   "label": "future items",
+   "variant": "dashed",
+   "role": "branch"
+  },
+  {
+   "id": "thread-apply",
+   "from": "thread",
+   "to": "apply",
+   "label": "approved",
+   "variant": "emphasis"
+  },
+  {
+   "id": "apply-updated",
+   "from": "apply",
+   "to": "updated",
+   "label": "patch + comment",
+   "variant": "emphasis"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "emerald",
+   "title": "The four boxes",
+   "items": [
+    "New requirement: story updates go in after dev approval",
+    "Future enhancement: one ticket, stories untouched",
+    "Still needs discussion: nothing in Linear yet",
+    "Already covered in app: Slack says what covers it"
+   ]
+  },
+  {
+   "dot": "cyan",
+   "title": "Safe by default",
+   "items": [
+    "The scheduled run only reads and DMs you",
+    "Nothing reaches your team or Linear until you press a button"
+   ]
+  }
+ ]
+}

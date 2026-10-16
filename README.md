@@ -1,75 +1,127 @@
-# feedback-review
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.svg">
+    <img src="docs/logo-light.svg" alt="feedback-review" width="440">
+  </picture>
+</p>
 
-Turn a weekly user feedback session into approved user-story updates, with one decision per piece of feedback.
+<h3 align="center">Turn last week's user feedback session into approved user-story updates.<br>One decision per piece of feedback.</h3>
 
-You run a recurring session where users see the product and react: a focus group, a demo review, a UAT check-in. Granola records it. The next step is always the same chore: work out what people said, decide what to act on, check it with the devs, and update the stories. This plugin does the legwork and leaves you the decisions.
+<p align="center">
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-0891B2?style=flat-square"></a>
+  <a href=".claude-plugin/plugin.json"><img alt="Version 0.1.0" src="https://img.shields.io/badge/version-0.1.0-1F9D63?style=flat-square"></a>
+  <a href="https://github.com/itskstevens/feedback-review/actions/workflows/test.yml"><img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/itskstevens/feedback-review/test.yml?branch=main&label=tests&style=flat-square"></a>
+  <img alt="Claude plugin" src="https://img.shields.io/badge/Claude-plugin-D97757?style=flat-square">
+  <img alt="Granola, Linear, Slack" src="https://img.shields.io/badge/Granola%20%C2%B7%20Linear%20%C2%B7%20Slack-8B5CF6?style=flat-square">
+</p>
 
-![A feedback card on the review page](docs/card.png)
+<p align="center">
+  <b><a href="#-install">Install</a> · <a href="#-how-it-works">How it works</a> · <a href="#-the-four-boxes">The four boxes</a> · <a href="ROADMAP.md">Roadmap</a></b>
+</p>
 
-## How it works
+<p align="center">
+  <img src="docs/card.png" alt="A feedback card on the review page: four boxes, and the story updates it would make in Linear" width="820">
+</p>
 
-1. **After the session**, a scheduled Claude task reads the Granola note and transcript, pulls out each piece of feedback, and maps it to the user stories in Linear it would change. It publishes a private review page and DMs you the link.
-2. **You classify each piece of feedback** on the page:
-   - **New requirement:** the story updates under the card go into Linear once the devs approve. A new story gets created if nothing existing fits.
-   - **Future enhancement:** one ticket in your Future Enhancements milestone, linked to the stories it would touch.
-   - **Still needs discussion:** you're still working through the requirements. Nothing changes in Linear.
-   - **Already covered in app:** nothing changes in Linear; Slack says what already covers it.
-3. **Send for dev approval.** The page posts to your project channel with all four groups and asks your devs to approve the new requirements only.
-4. **Apply.** Once they approve, one button updates the stories in Linear, comments on each one, and replies in the thread.
+---
 
-Nothing reaches your team or Linear until you press a button on the page.
+You run a recurring session where users see the product and react: a focus group, a demo review, a UAT check-in. Granola records it. Then comes the same chore every week: work out what people said, decide what to act on, check it with the devs, update the stories.
 
-## What you need
+**feedback-review does the legwork and leaves you the decisions.** A scheduled Claude run reads the session, maps each piece of feedback to the Linear stories it would change, and hands you a review page. You tick one box per card. The page handles Slack and Linear.
 
-- **Claude** with Cowork or Claude Code, artifacts that can use connectors, and scheduled tasks.
-- **Granola** connected to Claude. A paid plan lets the workflow read one folder; otherwise it matches meetings by title.
-- **Linear** connected to Claude. Your user stories are issues in one project, with titles that share a prefix like `US-`.
-- **Slack** connected to Claude, for the approval thread and your DM.
-
-Other project tools are on the [roadmap](ROADMAP.md).
-
-## Install
+## ⚡ Install
 
 Tell your Claude agent:
 
-> Set up the feedback review from github.com/itskstevens/feedback-review
-
-Your agent follows [SETUP.md](SETUP.md): it installs the plugin, checks your connectors, asks about six questions, creates the Linear milestone it needs, saves your settings, schedules the weekly run, and does a dry run on your latest session that only messages you.
-
-To install the plugin by hand in Claude Code:
-
+```text
+Set up the feedback review from github.com/itskstevens/feedback-review
 ```
+
+It follows [SETUP.md](SETUP.md): installs the plugin, checks your connectors, asks about six questions, creates the Linear milestone it needs, schedules the weekly run, and does a dry run on your latest session that only messages you.
+
+<details>
+<summary><b>Install by hand in Claude Code</b></summary>
+
+```text
 /plugin marketplace add itskstevens/feedback-review
 /plugin install feedback-review@itskstevens
 ```
 
-then ask Claude to "set up the feedback review".
+Then ask Claude to "set up the feedback review".
 
-## What's in here
+</details>
+
+### What you need
+
+| | |
+|---|---|
+| **Claude** | Cowork or Claude Code, with artifacts that can use connectors, and scheduled tasks |
+| **Granola** | Connected to Claude. A paid plan lets the run read one folder; otherwise it matches meetings by title |
+| **Linear** | Connected to Claude. User stories live in one project and share a title prefix like `US-` |
+| **Slack** | Connected to Claude, for the approval thread and your DM |
+
+## 🧭 How it works
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/flow-dark.png">
+    <img src="docs/flow-light.png" alt="Flow: Claude reads the Granola session, maps feedback to Linear stories and publishes a review page. You classify feedback and send for approval. Devs approve in Slack. Applying patches the stories; future enhancements become tickets in their own milestone." width="900">
+  </picture>
+</p>
+
+<p align="center"><sub>Drawn with <a href="https://github.com/tt-a1i/archify">Archify</a>. Download <a href="docs/flow.html">docs/flow.html</a> for the interactive version.</sub></p>
+
+1. **After the session**, the scheduled run reads the Granola note and transcript, pulls out each piece of feedback, and maps it to the stories it would change. It publishes a private review page and DMs you the link.
+2. **You decide.** One box per piece of feedback. You can't send until everything is classified.
+3. **Send for approval.** Future enhancements get logged in Linear. The project channel gets one post listing every group, and your devs are asked to approve only the new requirements.
+4. **Apply.** Once they approve, one button patches the stories in Linear, comments on each one, creates any new stories, and replies in the thread.
+
+## 🗳 The four boxes
+
+| | Box | In Linear | In Slack |
+|---|---|---|---|
+| 🟢 | **New requirement** | Story updates go in after dev approval. A new story is created if nothing fits | Listed for approval |
+| 🟣 | **Future enhancement** | One ticket in your Future Enhancements milestone, linked to the stories | Listed, no action needed |
+| 🟠 | **Still needs discussion** | Nothing yet | Listed, no action yet |
+| 🔵 | **Already covered in app** | Nothing | Listed with what covers it |
+
+## 🔒 Safe by default
+
+- The scheduled run only reads. It writes nothing to Linear and messages only you.
+- Nothing reaches your team or Linear until you press a button on the page.
+- The page re-reads each story before patching and skips anything whose wording changed.
+- This repo holds no meeting content. Your settings and pages stay in your own Claude project and artifacts.
+
+<details>
+<summary><b>What's in the repo</b></summary>
 
 | Path | What it is |
 |---|---|
-| `skills/feedback-review/` | The weekly run: read the session, map feedback to stories, build and publish the page |
+| `skills/feedback-review/` | The weekly run: read the session, map feedback, build and publish the page |
 | `skills/feedback-review/assets/review-page.html` | The review page template |
 | `skills/feedback-review/scripts/build_page.py` | Validates the data and builds the page (standard library only) |
 | `skills/feedback-review-setup/` | Guided setup and the scheduled task prompt |
 | `config.example.yaml` | Every setting, with comments |
 | `examples/` | Made-up data for a fictional team, and the page it builds |
-| `docs/` | Linear notes and the spec a new project tool has to meet |
+| `docs/` | Linear notes, the adapter spec for other tools, and the flow diagram |
 | `tests/` | Data validation tests and a browser test with Linear and Slack mocked |
 
-## Privacy
+</details>
 
-The repo holds no meeting content. Your settings, generated data and review pages stay in your own Claude project and artifacts. Review pages are private to you until you share them.
+## 🛣 Roadmap
 
-## Develop
+Linear is the MVP. GitHub Issues, Asana, Jira, other note takers, Microsoft Teams and more are in [ROADMAP.md](ROADMAP.md). Vote or propose in [issues](https://github.com/itskstevens/feedback-review/issues).
 
-```
+## 🧪 Develop
+
+```bash
 npm install
 npx playwright install chromium
 npm test
 ```
 
-## License
+---
 
-MIT. Maintained by [Kevin Stevens](https://github.com/itskstevens). Issues and pull requests welcome.
+<p align="center">
+  <sub>MIT · Maintained by <a href="https://github.com/itskstevens">@itskstevens</a> · Issues and pull requests welcome</sub>
+</p>

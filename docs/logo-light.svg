@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="96" viewBox="0 0 520 96" role="img" aria-label="feedback-review">
+  <g transform="translate(8 12)">
+    <rect x="0" y="0" width="32" height="32" rx="8" fill="#1F9D63"/>
+    <rect x="40" y="0" width="32" height="32" rx="8" fill="#8B5CF6"/>
+    <rect x="0" y="40" width="32" height="32" rx="8" fill="#E8A33D"/>
+    <rect x="40" y="40" width="32" height="32" rx="8" fill="#2E86DE"/>
+    <path d="M8 16 l6 6 l11 -12" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="104" y="52" font-family="ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#15202C">feedback-review</text>
+  <text x="106" y="78" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" fill="#586577">granola → you → slack → linear</text>
+</svg>
